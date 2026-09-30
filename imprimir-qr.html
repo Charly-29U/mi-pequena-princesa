@@ -1,0 +1,476 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Imprimir Código QR para Isabel | Charly</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Great+Vibes&family=Playfair+Display:ital,wght@0,600;1,600&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+  <style>
+    :root {
+      --primary: #d94f65;
+      --deep-wine: #5c1825;
+      --bg: #f8f6f5;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background: var(--bg);
+      color: #222;
+      padding: 30px 15px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+    }
+
+    /* Panel de Control para Charly (no se imprime) */
+    .admin-panel {
+      background: #ffffff;
+      border: 1px solid #e5d7d9;
+      border-radius: 16px;
+      padding: 24px;
+      max-width: 620px;
+      width: 100%;
+      margin-bottom: 30px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.06);
+    }
+
+    .admin-panel h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 22px;
+      color: var(--deep-wine);
+      margin-bottom: 8px;
+    }
+
+    .admin-panel p {
+      font-size: 14px;
+      color: #555;
+      line-height: 1.6;
+      margin-bottom: 16px;
+    }
+
+    .url-input-group {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      margin-bottom: 16px;
+    }
+
+    .url-input-group label {
+      font-size: 13px;
+      font-weight: 600;
+      color: #333;
+    }
+
+    .url-input-group input {
+      width: 100%;
+      padding: 12px 14px;
+      border: 1.5px solid #d8b8bf;
+      border-radius: 8px;
+      font-size: 14px;
+      font-family: monospace;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    .url-input-group input:focus {
+      border-color: var(--primary);
+    }
+
+    .action-buttons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .btn {
+      padding: 10px 20px;
+      border-radius: 30px;
+      font-weight: 600;
+      font-size: 14px;
+      cursor: pointer;
+      border: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.2s;
+      text-decoration: none;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #d94f65, #b81b43);
+      color: #fff;
+      box-shadow: 0 4px 12px rgba(217, 79, 101, 0.35);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 16px rgba(217, 79, 101, 0.45);
+    }
+
+    .btn-secondary {
+      background: #f0edf0;
+      color: #444;
+    }
+
+    .btn-secondary:hover {
+      background: #e4dfe4;
+    }
+
+    /* CONTENEDOR DE LA TARJETA IMPRESA */
+    .printable-sheet {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 20px;
+    }
+
+    /* Tarjeta Romántica tamaño regalo (aprox 9x12 cm) */
+    .gift-card {
+      width: 340px;
+      background: #ffffff;
+      border: 2px dashed #e2aab5;
+      border-radius: 20px;
+      padding: 28px 24px;
+      text-align: center;
+      position: relative;
+      box-shadow: 0 8px 30px rgba(92, 24, 37, 0.08);
+      page-break-inside: avoid;
+    }
+
+    .gift-card .cut-hint {
+      position: absolute;
+      top: -10px;
+      left: 20px;
+      background: #fff;
+      padding: 0 8px;
+      font-size: 11px;
+      color: #999;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .card-header-love {
+      margin-bottom: 12px;
+    }
+
+    .card-tag {
+      font-family: 'Caveat', cursive;
+      font-size: 20px;
+      color: #d94f65;
+      font-weight: 700;
+    }
+
+    .card-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 22px;
+      color: var(--deep-wine);
+      margin-top: 2px;
+      letter-spacing: -0.3px;
+    }
+
+    .card-subtitle {
+      font-size: 13px;
+      color: #7a6066;
+      margin-top: 4px;
+      line-height: 1.4;
+    }
+
+    /* Marco de corazón */
+    .heart-qr-frame {
+      position: relative;
+      width: 220px;
+      height: 200px;
+      margin: 16px auto;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .heart-svg-background {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 1;
+    }
+
+    .qr-canvas-holder {
+      position: relative;
+      z-index: 2;
+      width: 125px;
+      height: 125px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #fff;
+      padding: 6px;
+      border-radius: 8px;
+      margin-top: 10px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.06);
+    }
+
+    .qr-canvas-holder img,
+    .qr-canvas-holder canvas {
+      display: block;
+      width: 115px !important;
+      height: 115px !important;
+    }
+
+    .card-footer-love {
+      margin-top: 10px;
+    }
+
+    .scan-instruction {
+      font-size: 13px;
+      font-weight: 600;
+      color: #b81b43;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+    }
+
+    .love-dedication {
+      font-family: 'Great Vibes', cursive;
+      font-size: 28px;
+      color: var(--deep-wine);
+      margin-top: 10px;
+      line-height: 1.1;
+    }
+
+    .card-corner-deco {
+      position: absolute;
+      font-size: 14px;
+      opacity: 0.5;
+    }
+    .c-tl { top: 8px; left: 10px; }
+    .c-tr { top: 8px; right: 10px; }
+    .c-bl { bottom: 8px; left: 10px; }
+    .c-br { bottom: 8px; right: 10px; }
+
+    /* ESTILOS DE IMPRESIÓN (CTRL + P) */
+    @media print {
+      body {
+        background: #ffffff !important;
+        padding: 0 !important;
+      }
+
+      .admin-panel,
+      .no-print {
+        display: none !important;
+      }
+
+      .printable-sheet {
+        margin: 40px auto;
+      }
+
+      .gift-card {
+        border: 1px dashed #999 !important;
+        box-shadow: none !important;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Panel de configuración para Charly -->
+  <aside class="admin-panel no-print">
+    <h1>💌 Tarjeta de Código QR para Imprimir</h1>
+    <p>
+      Este código QR <strong>no aparece en la página</strong>. Está diseñado para que lo imprimas, lo recortes y se lo entregues en persona a <strong>Isabel</strong> junto con tu fotografía.
+    </p>
+
+    <div class="url-input-group">
+      <label for="page-url">Enlace que se abrirá al escanear (Tu web en Vercel):</label>
+      <input type="text" id="page-url" value="https://mi-pequena-princesa.vercel.app" placeholder="https://tu-proyecto.vercel.app">
+      <small style="color: #666; font-size: 12px; margin-top: 4px;">
+        💡 Cuando subas tu página a Vercel, copia tu enlace final aquí para que el QR se actualice al instante.
+      </small>
+    </div>
+
+    <div class="action-buttons">
+      <button type="button" class="btn btn-primary" onclick="window.print()">
+        <span>🖨️ Imprimir Tarjeta</span>
+      </button>
+      <button type="button" class="btn btn-secondary" id="btn-update-qr">
+        <span>🔄 Actualizar QR</span>
+      </button>
+      <button type="button" class="btn btn-secondary" id="btn-download-card">
+        <span>💾 Descargar Tarjeta (PNG)</span>
+      </button>
+      <a href="index.html" class="btn btn-secondary">
+        <span>🌹 Ver Página Principal</span>
+      </a>
+    </div>
+  </aside>
+
+  <!-- Hoja para imprimir -->
+  <main class="printable-sheet">
+    <article class="gift-card" id="gift-card-node">
+      <span class="cut-hint no-print">✂️ Línea de corte</span>
+      <span class="card-corner-deco c-tl">🌸</span>
+      <span class="card-corner-deco c-tr">✨</span>
+      <span class="card-corner-deco c-bl">✨</span>
+      <span class="card-corner-deco c-br">🌸</span>
+
+      <div class="card-header-love">
+        <span class="card-tag">Para mi pequeña princesa</span>
+        <h2 class="card-title">Isabel 💕</h2>
+        <p class="card-subtitle">
+          Tengo un detalle muy especial para ti.<br>
+          Ábrelo apuntando con tu celular:
+        </p>
+      </div>
+
+      <!-- Marco en forma de corazón con QR -->
+      <div class="heart-qr-frame">
+        <svg class="heart-svg-background" viewBox="0 0 320 300">
+          <defs>
+            <linearGradient id="heart-grad-print" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0%" stop-color="#ff4d6d"/>
+              <stop offset="50%" stop-color="#d94f65"/>
+              <stop offset="100%" stop-color="#7209b7"/>
+            </linearGradient>
+          </defs>
+          <path d="M160,285 C70,215 15,160 15,88 C15,38 52,10 98,10 C126,10 148,22 160,42 C172,22 194,10 222,10 C268,10 305,38 305,88 C305,160 250,215 160,285 Z" fill="#fff5f7" stroke="url(#heart-grad-print)" stroke-width="4"/>
+        </svg>
+
+        <div class="qr-canvas-holder" id="qr-container"></div>
+      </div>
+
+      <div class="card-footer-love">
+        <div class="scan-instruction">
+          <span>📷 Escanéame con amor ♡</span>
+        </div>
+        <p class="love-dedication">
+          De Charly, con todo mi corazón
+        </p>
+      </div>
+    </article>
+  </main>
+
+  <script>
+    const urlInput = document.getElementById('page-url');
+    const qrContainer = document.getElementById('qr-container');
+    const updateBtn = document.getElementById('btn-update-qr');
+    const downloadBtn = document.getElementById('btn-download-card');
+
+    // Auto-detectar URL actual si está corriendo en servidor local o Vercel
+    if (window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1') {
+      urlInput.value = window.location.origin;
+    } else {
+      urlInput.value = window.location.origin;
+    }
+
+    let qrCodeInstance = null;
+
+    function renderQR() {
+      qrContainer.innerHTML = '';
+      const textToEncode = urlInput.value.trim() || window.location.origin;
+
+      qrCodeInstance = new QRCode(qrContainer, {
+        text: textToEncode,
+        width: 115,
+        height: 115,
+        colorDark: '#4a1525',
+        colorLight: '#ffffff',
+        correctLevel: QRCode.CorrectLevel.H
+      });
+    }
+
+    renderQR();
+
+    updateBtn.addEventListener('click', renderQR);
+    urlInput.addEventListener('change', renderQR);
+
+    // Descargar tarjeta como imagen PNG
+    downloadBtn.addEventListener('click', () => {
+      const card = document.getElementById('gift-card-node');
+      const canvas = document.createElement('canvas');
+      const ctx = canvas.getContext('2d');
+
+      const width = 680;
+      const height = 800;
+      canvas.width = width;
+      canvas.height = height;
+
+      // Fondo
+      ctx.fillStyle = '#ffffff';
+      ctx.fillRect(0, 0, width, height);
+
+      // Borde decorativo
+      ctx.strokeStyle = '#e2aab5';
+      ctx.lineWidth = 4;
+      ctx.strokeRect(20, 20, width - 40, height - 40);
+
+      // Textos
+      ctx.textAlign = 'center';
+
+      ctx.font = 'bold 36px sans-serif';
+      ctx.fillStyle = '#d94f65';
+      ctx.fillText('Para mi pequeña princesa', width / 2, 85);
+
+      ctx.font = 'bold 44px Georgia, serif';
+      ctx.fillStyle = '#5c1825';
+      ctx.fillText('Isabel 💕', width / 2, 145);
+
+      ctx.font = '22px sans-serif';
+      ctx.fillStyle = '#666';
+      ctx.fillText('Tengo un detalle muy especial para ti.', width / 2, 195);
+      ctx.fillText('Ábrelo apuntando con tu celular:', width / 2, 230);
+
+      // Obtener el QR generado
+      const qrImg = qrContainer.querySelector('img') || qrContainer.querySelector('canvas');
+      if (qrImg) {
+        const qrSize = 260;
+        const qrX = (width - qrSize) / 2;
+        const qrY = 275;
+
+        // Dibujar un corazón detrás del QR
+        ctx.fillStyle = '#ffeef2';
+        ctx.beginPath();
+        const topCurveHeight = 60;
+        ctx.moveTo(width / 2, qrY + 360);
+        ctx.bezierCurveTo(width / 2 - 200, qrY + 240, width / 2 - 200, qrY - 20, width / 2, qrY + 80);
+        ctx.bezierCurveTo(width / 2 + 200, qrY - 20, width / 2 + 200, qrY + 240, width / 2, qrY + 360);
+        ctx.closePath();
+        ctx.fill();
+
+        ctx.strokeStyle = '#ff4d6d';
+        ctx.lineWidth = 4;
+        ctx.stroke();
+
+        // Marco blanco para QR
+        ctx.fillStyle = '#ffffff';
+        ctx.fillRect(qrX - 15, qrY - 15, qrSize + 30, qrSize + 30);
+        ctx.drawImage(qrImg, qrX, qrY, qrSize, qrSize);
+      }
+
+      ctx.font = 'bold 24px sans-serif';
+      ctx.fillStyle = '#b81b43';
+      ctx.fillText('📷 Escanéame con amor ♡', width / 2, 690);
+
+      ctx.font = 'italic 34px Georgia, serif';
+      ctx.fillStyle = '#5c1825';
+      ctx.fillText('De Charly, con todo mi corazón', width / 2, 740);
+
+      const link = document.createElement('a');
+      link.download = 'tarjeta-qr-para-isabel.png';
+      link.href = canvas.toDataURL('image/png');
+      link.click();
+    });
+  </script>
+</body>
+</html>

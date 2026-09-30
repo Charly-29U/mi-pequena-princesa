@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#122139">
+  <meta name="description" content="Charly e Isabel. Perdón por cada uno de mis errores, no te quiero perder.">
+  <title>Isabel | Charly y Isabel</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Great+Vibes&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js" defer></script>
+  <script src="script.js" defer></script>
+</head>
+<body class="rose-classic-page">
+  <!-- Botón flotante para la música de fondo -->
+  <div class="music-floating-toggle">
+    <button class="dark-music-btn" type="button" data-music-toggle aria-label="Reproducir nuestra canción" title="Reproducir música romántica">
+      <span class="music-note-icon">🎵</span>
+      <span class="music-label-text" data-music-label>Nuestra Canción</span>
+      <div class="mini-equalizer" aria-hidden="true">
+        <span></span><span></span><span></span>
+      </div>
+    </button>
+  </div>
+
+  <!-- Pantalla principal única -->
+  <main class="rose-screen-wrap">
+    <!-- Encabezado con nombres y disculpa sincera -->
+    <header class="rose-header">
+      <h2><u><i>Charly y Isabel 💕❤️</i></u></h2>
+      <h1 class="apology-title">
+        Perdón por cada uno de mis errores.<br>
+        <span class="apology-accent">No te quiero perder.</span>
+      </h1>
+      <p class="touch-hint-line">
+        «Toca la flor para ver todos nuestros recuerdos juntos...»
+      </p>
+    </header>
+
+    <!-- La Flor en su Cúpula de Cristal de CSS Puro con pétalo que va cayendo -->
+    <a href="recuerdos.html" class="rose-interactive-anchor" id="bouquet-action" aria-label="Tocar la rosa para abrir nuestros recuerdos">
+      <div class="container">
+        <!-- Cúpula de Cristal -->
+        <div class="glass"></div>
+
+        <!-- Espinas del tallo -->
+        <div class="thorns">
+          <div></div><div></div><div></div><div></div>
+        </div>
+
+        <!-- Resplandor luminoso palpitante -->
+        <div class="glow"></div>
+
+        <!-- Hojas y tallo verde -->
+        <div class="rose-leaves">
+          <div></div><div></div>
+        </div>
+
+        <!-- Pétalos de la rosa -->
+        <div class="rose-petals">
+          <div></div><div></div><div></div><div></div>
+          <div></div><div></div><div></div>
+        </div>
+
+        <!-- Chispas mágicas ascendentes -->
+        <div class="sparkles">
+          <div></div><div></div><div></div><div></div>
+          <div></div><div></div><div></div><div></div>
+          <div></div><div></div>
+        </div>
+
+        <!-- Pétalo que cae -->
+        <div class="falling-petal"></div>
+      </div>
+
+      <!-- Badge interactivo debajo de la cúpula -->
+      <div class="click-rose-badge">
+        <span class="badge-sparkle">🌹</span>
+        <span class="badge-text">Toca la rosa para entrar a nuestros recuerdos</span>
+        <span class="badge-arrow">→</span>
+      </div>
+    </a>
+
+    <!-- Barra inferior con enlace a recuerdos -->
+    <footer class="rose-footer">
+      <a href="recuerdos.html" class="dark-footer-pill">
+        <span>💌 Ver cada recuerdo, fotos y videos</span>
+      </a>
+    </footer>
+  </main>
+
+  <!-- Elemento de audio -->
+  <audio id="site-audio" loop preload="auto" aria-label="Canción romántica"></audio>
+</body>
+</html>

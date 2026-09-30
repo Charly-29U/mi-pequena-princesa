@@ -1,0 +1,556 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#fcf3ef">
+  <meta name="description" content="Nuestros recuerdos más bonitos, fotos, videos y una promesa de cuidar lo que somos.">
+  <title>Nuestros Recuerdos | Charly & Isabel</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Great+Vibes&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <script src="script.js" defer></script>
+</head>
+<body class="memories-page">
+  <!-- Fondo dinámico de luciérnagas de Ray y pétalos de rosa -->
+  <canvas id="ambient-canvas" class="ambient-canvas" aria-hidden="true"></canvas>
+
+  <!-- Estrella Evangeline -->
+  <div class="evangeline-star" title="Evangeline, la estrella más brillante" aria-hidden="true">
+    <span class="star-sparkle">✦</span>
+    <span class="star-caption">Evangeline ✨</span>
+  </div>
+
+  <!-- Barra de navegación superior -->
+  <header class="topbar">
+    <a class="wordmark" href="index.html" aria-label="Volver a la flor">
+      <span class="wordmark-heart">♥</span>
+      <div class="wordmark-text">
+        <strong>MI PEQUEÑA PRINCESA</strong>
+        <span>← Volver a la Rosa</span>
+      </div>
+    </a>
+
+    <div class="music-player-bar">
+      <button class="music-button" type="button" data-music-toggle aria-label="Reproducir nuestra canción" title="Reproducir música romántica">
+        <span class="music-disc" aria-hidden="true">
+          <span class="music-note-icon">🎵</span>
+        </span>
+        <div class="music-info">
+          <span class="music-title-text" data-music-label>Nuestra Canción (La Princesa y el Sapo)</span>
+          <span class="music-status-sub">Ma Belle Evangeline</span>
+        </div>
+      </button>
+      <div class="audio-waves" aria-hidden="true">
+        <span></span><span></span><span></span><span></span>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- Encabezado de la Página de Recuerdos -->
+    <section class="memory-heading layout-wrap">
+      <div class="header-nav-row">
+        <a class="back-link" href="index.html">
+          <span class="back-icon" aria-hidden="true">🌹 ←</span> Volver a la Rosa
+        </a>
+        <div class="characters-floating-badge">
+          <span class="char-icon" title="Doctora Juguetes">🩹 Doctora Juguetes</span>
+          <span class="char-sep">+</span>
+          <span class="char-icon" title="La Princesa y el Sapo">👑 Tiana & Naveen 🐸</span>
+        </div>
+      </div>
+
+      <div class="memory-title-box">
+        <div class="cute-badge sapo-badge">
+          <span class="badge-icon">⭐</span>
+          <span>Nuestra Historia es mi Mayor Tesoro</span>
+        </div>
+        <h1 class="main-title">
+          Cada recuerdo contigo<br>
+          <em class="title-accent">vive en mi corazón.</em>
+        </h1>
+        <p class="intro">
+          Mirar cada una de estas fotos y videos me recuerda por qué luchar por ti vale cada segundo de mi vida. Desde cuando te cocino, cuando me mandas besitos, cuando te duermes en mi pecho o cuando me sonríes con esa luz única. <strong>Perdón por mis errores, no te quiero perder.</strong>
+        </p>
+      </div>
+
+      <!-- Personajes animados: Doctora Juguetes y La Princesa y el Sapo -->
+      <div class="magical-duo-banner" aria-label="Decoración animada de personajes">
+        <!-- Personaje 1: El Gran Chequeo del Amor (Doctora Juguetes) -->
+        <div class="char-card doc-box">
+          <div class="doc-icon-pulse">🩺</div>
+          <div class="doc-card-body">
+            <h3>El Gran Libro de los Chequeos 📖</h3>
+            <p><strong>Paciente:</strong> Mi corazón arrepentido.</p>
+            <p><strong>Diagnóstico:</strong> Sufre por haberte lastimado y te necesita más que al aire.</p>
+            <p><strong>Tratamiento:</strong> Abrazarte muy fuerte, cuidarte todos los días y nunca soltar tu mano.</p>
+          </div>
+          <span class="sparkle-doc">✨</span>
+        </div>
+
+        <!-- Personaje 2: Ray y Evangeline (La Princesa y el Sapo) -->
+        <div class="char-card bayou-box">
+          <div class="ray-mini-glow">
+            <span class="firefly-emoji">💡</span>
+          </div>
+          <div class="bayou-card-body">
+            <h3>La Luciérnaga Ray & Evangeline 🌟</h3>
+            <p class="bayou-quote">«Miren hacia arriba... esa es mi Evangeline, la estrella más hermosa del cielo.»</p>
+            <span class="ray-note">Para mí, tú eres esa estrella que ilumina mi noche más oscura.</span>
+          </div>
+          <span class="sparkle-bayou">✨</span>
+        </div>
+
+        <!-- Personaje 3: La Rosa Encantada -->
+        <div class="char-card beauty-box">
+          <div class="rose-mini-icon">
+            <span class="rose-emoji">🌹</span>
+          </div>
+          <div class="beauty-card-body">
+            <h3>La Rosa Eterna de La Bella y la Bestia 🥀</h3>
+            <p class="bayou-quote">«Aunque caiga el último pétalo en el reloj del tiempo, mi amor por ti jamás se marchitará.»</p>
+            <span class="beauty-note">Tú viste al hombre detrás de mis imperfecciones.</span>
+          </div>
+          <span class="sparkle-rose">✨💛</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ÁLBUM COMPLETO CON TODAS LAS 20 FOTOS REALES (DISEÑO POLAROID CENTRADO) -->
+    <section class="photos-album-section" aria-label="Todas nuestras fotos juntos">
+      <div class="section-title-center">
+        <span class="tiny-flower">🌸</span>
+        <h2 class="album-section-title">Nuestras 20 Fotos Especiales</h2>
+        <p class="album-section-sub">Toca cualquier polaroid para verla en pantalla completa con todo mi amor ♡</p>
+      </div>
+
+      <div class="photos-album-grid">
+
+        <article class="polaroid-card" data-full="assets/foto-8.jpg" data-caption="Nuestra foto favorita con gafas — Mira esa sonrisa de los dos. Cuando estoy a tu lado siento una paz que no existe en ninguna otra parte. Donde soy más feliz: a tu lado.">
+          <div class="polaroid-tape" aria-hidden="true"></div>
+          <div class="polaroid-img-wrap">
+            <img src="assets/foto-8.jpg" alt="Nuestra foto favorita con gafas" loading="lazy">
+          </div>
+          <div class="polaroid-content">
+            <span class="polaroid-num-badge">Recuerdo #01 ♡</span>
+            <h3 class="polaroid-title">Nuestra foto favorita con gafas</h3>
+            <p class="polaroid-desc">Mira esa sonrisa de los dos. Cuando estoy a tu lado siento una paz que no existe en ninguna otra parte. Donde soy más feliz: a tu lado.</p>
+            <span class="zoom-hint">🔍 Toca para ampliar</span>
+          </div>
+        </article>
+
+        <article class="polaroid-card" data-full="assets/foto-2.jpg" data-caption="Tus ojitos y tu corazón a las 12:33 — Eran las 12:33 de la noche en videollamada e hiciste ese corazón con tus manitas alrededor de tus ojitos. Ese corazón lo llevo en el alma.">
+          <div class="polaroid-tape" aria-hidden="true"></div>
+          <div class="polaroid-img-wrap">
+            <img src="assets/foto-2.jpg" alt="Tus ojitos y tu corazón a las 12:33" loading="lazy">
+          </div>
+          <div class="polaroid-content">
+            <span class="polaroid-num-badge">Recuerdo #02 ♡</span>
+            <h3 class="polaroid-title">Tus ojitos y tu corazón a las 12:33</h3>
+            <p class="polaroid-desc">Eran las 12:33 de la noche en videollamada e hiciste ese corazón con tus manitas alrededor de tus ojitos. Ese corazón lo llevo en el alma.</p>
+            <span class="zoom-hint">🔍 Toca para ampliar</span>
+          </div>
+        </article>
+
+        <article class="polaroid-card" data-full="assets/foto-5.jpg" data-caption="Camisetas blancas a juego y risas — Tú tan coqueta mandando un besito con tus labios brillantes y yo detrás haciéndote reír. Esa chispa es lo más valioso que tengo.">
+          <div class="polaroid-tape" aria-hidden="true"></div>
+          <div class="polaroid-img-wrap">
+            <img src="assets/foto-5.jpg" alt="Camisetas blancas a juego y risas" loading="lazy">
+          </div>
+          <div class="polaroid-content">
+            <span class="polaroid-num-badge">Recuerdo #03 ♡</span>
+            <h3 class="polaroid-title">Camisetas blancas a juego y risas</h3>
+            <p class="polaroid-desc">Tú tan coqueta mandando un besito con tus labios brillantes y yo detrás haciéndote reír. Esa chispa es lo más valioso que tengo.</p>
+            <span class="zoom-hint">🔍 Toca para ampliar</span>
+          </div>
+        </article>
+
+        <article class="polaroid-card" data-full="assets/foto-4.jpg" data-caption="Cocinando con amor para ti — En la cocina con mi camiseta de los Bulls preparándote de comer mientras me tomabas esta foto. Me encanta consentirte y verte feliz.">
+          <div class="polaroid-tape" aria-hidden="true"></div>
+          <div class="polaroid-img-wrap">
+            <img src="assets/foto-4.jpg" alt="Cocinando con amor para ti" loading="lazy">
+          </div>
+          <div class="polaroid-content">
+            <span class="polaroid-num-badge">Recuerdo #04 ♡</span>
+            <h3 class="polaroid-title">Cocinando con amor para ti</h3>
+            <p class="polaroid-desc">En la cocina con mi camiseta de los Bulls preparándote de comer mientras me tomabas esta foto. Me encanta consentirte y verte feliz.</p>
+            <span class="zoom-hint">🔍 Toca para ampliar</span>
+          </div>
+        </article>
+
+        <article class="polaroid-card" data-full="assets/foto-9.jpg" data-caption="Dormidita en mi pecho — Sentir tu cabecita descansando sobre mí y tu respiración tranquila es la sensación más tierna del universo. Mi lugar sagrado.">
+          <div class="polaroid-tape" aria-hidden="true"></div>
+          <div class="polaroid-img-wrap">
+            <img src="assets/foto-9.jpg" alt="Dormidita en mi pecho" loading="lazy">
+          </div>
+          <div class="polaroid-content">
+            <span class="polaroid-num-badge">Recuerdo #05 ♡</span>
+            <h3 class="polaroid-title">Dormidita en mi pecho</h3>
+            <p class="polaroid-desc">Sentir tu cabecita descansando sobre mí y tu respiración tranquila es la sensación más tierna del universo. Mi lugar sagrado.</p>
+            <span class="zoom-hint">🔍 Toca para ampliar</span>
+          </div>
+        </article>
+
+        <article class="polaroid-card" data-full="assets/foto-7.jpg" data-caption="Un beso que detiene el mundo — Cada beso tuyo me devuelve la vida y me llena el corazón. Mi único deseo es tenerte entre mis brazos para siempre.">
+          <div class="polaroid-tape" aria-hidden="true"></div>
+          <div class="polaroid-img-wrap">
+            <img src="assets/foto-7.jpg" alt="Un beso que detiene el mundo" loading="lazy">
+          </div>
+          <div class="polaroid-content">
+            <span class="polaroid-num-badge">Recuerdo #06 ♡</span>
+            <h3 class="polaroid-title">Un beso que detiene el mundo</h3>
+            <p class="polaroid-desc">Cada beso tuyo me devuelve la vida y me llena el corazón. Mi único deseo es tenerte entre mis brazos para siempre.</p>
+            <span class="zoom-hint">🔍 Toca para ampliar</span>
+          </div>
+        </article>
+
+        <article class="polaroid-card" data-full="assets/foto-10.jpg" data-caption="Tú con tu ramo de girasoles — La verdadera flor del jardín eres tú. Verte sonreír con flores es contemplar la creación más hermosa de Dios.">
+          <div class="polaroid-tape" aria-hidden="true"></div>
+          <div class="polaroid-img-wrap">
+            <img src="assets/foto-10.jpg" alt="Tú con tu ramo de girasoles" loading="lazy">
+          </div>
+          <div class="polaroid-content">
+            <span class="polaroid-num-badge">Recuerdo #07 ♡</span>
+            <h3 class="polaroid-title">Tú con tu ramo de girasoles</h3>
+            <p class="polaroid-desc">La verdadera flor del jardín eres tú. Verte sonreír con flores es contemplar la creación más hermosa de Dios.</p>
+            <span class="zoom-hint">🔍 Toca para ampliar</span>
+          </div>
+        </article>
+
+        <article class="polaroid-card" data-full="assets/foto-6.jpg" data-caption="Tu ternura con flores amarillas — Esa mirada suave con las flores amarillas iluminando tu carita... Eres un sueño hecho realidad.">
+          <div class="polaroid-tape" aria-hidden="true"></div>
+          <div class="polaroid-img-wrap">
+            <img src="assets/foto-6.jpg" alt="Tu ternura con flores amarillas" loading="lazy">
+          </div>
+          <div class="polaroid-content">
+            <span class="polaroid-num-badge">Recuerdo #08 ♡</span>
+            <h3 class="polaroid-title">Tu ternura con flores amarillas</h3>
+            <p class="polaroid-desc">Esa mirada suave con las flores amarillas iluminando tu carita... Eres un sueño hecho realidad.</p>
+            <span class="zoom-hint">🔍 Toca para ampliar</span>
+          </div>
+        </article>
+
+        <article class="polaroid-card" data-full="assets/foto-1.jpg" data-caption="Noches de videollamada y peluche — Dormirnos hablando por videollamada mientras abrazas tu peluche. La distancia se hace nada cuando estamos conectados.">
+          <div class="polaroid-tape" aria-hidden="true"></div>
+          <div class="polaroid-img-wrap">
+            <img src="assets/foto-1.jpg" alt="Noches de videollamada y peluche" loading="lazy">
+          </div>
+          <div class="polaroid-content">
+            <span class="polaroid-num-badge">Recuerdo #09 ♡</span>
+            <h3 class="polaroid-title">Noches de videollamada y peluche</h3>
+            <p class="polaroid-desc">Dormirnos hablando por videollamada mientras abrazas tu peluche. La distancia se hace nada cuando estamos conectados.</p>
+            <span class="zoom-hint">🔍 Toca para ampliar</span>
+          </div>
+        </article>
+
+        <article class="polaroid-card" data-full="assets/foto-3.jpg" data-caption="Acostaditos viendo videos en paz — Tardes acostados juntos, hablando de todo y de nada, con esa confianza única que solo existe entre tú y yo.">
+          <div class="polaroid-tape" aria-hidden="true"></div>
+          <div class="polaroid-img-wrap">
+            <img src="assets/foto-3.jpg" alt="Acostaditos viendo videos en paz" loading="lazy">
+          </div>
+          <div class="polaroid-content">
+            <span class="polaroid-num-badge">Recuerdo #10 ♡</span>
+            <h3 class="polaroid-title">Acostaditos viendo videos en paz</h3>
+            <p class="polaroid-desc">Tardes acostados juntos, hablando de todo y de nada, con esa confianza única que solo existe entre tú y yo.</p>
+            <span class="zoom-hint">🔍 Toca para ampliar</span>
+          </div>
+        </article>
+
+        <article class="polaroid-card" data-full="assets/foto-11.jpg" data-caption="Tu sonrisa que ilumina mis días — No hay nada en este planeta más hermoso que verte reír a carcajadas. Tu felicidad es mi felicidad.">
+          <div class="polaroid-tape" aria-hidden="true"></div>
+          <div class="polaroid-img-wrap">
+            <img src="assets/foto-11.jpg" alt="Tu sonrisa que ilumina mis días" loading="lazy">
+          </div>
+          <div class="polaroid-content">
+            <span class="polaroid-num-badge">Recuerdo #11 ♡</span>
+            <h3 class="polaroid-title">Tu sonrisa que ilumina mis días</h3>
+            <p class="polaroid-desc">No hay nada en este planeta más hermoso que verte reír a carcajadas. Tu felicidad es mi felicidad.</p>
+            <span class="zoom-hint">🔍 Toca para ampliar</span>
+          </div>
+        </article>
+
+        <article class="polaroid-card" data-full="assets/foto-12.jpg" data-caption="El corazoncito dorado en tu pecho — Cerca de tu corazón, donde siempre quiero estar. Eres mi consentida y mi persona favorita.">
+          <div class="polaroid-tape" aria-hidden="true"></div>
+          <div class="polaroid-img-wrap">
+            <img src="assets/foto-12.jpg" alt="El corazoncito dorado en tu pecho" loading="lazy">
+          </div>
+          <div class="polaroid-content">
+            <span class="polaroid-num-badge">Recuerdo #12 ♡</span>
+            <h3 class="polaroid-title">El corazoncito dorado en tu pecho</h3>
+            <p class="polaroid-desc">Cerca de tu corazón, donde siempre quiero estar. Eres mi consentida y mi persona favorita.</p>
+            <span class="zoom-hint">🔍 Toca para ampliar</span>
+          </div>
+        </article>
+
+        <article class="polaroid-card" data-full="assets/foto-13.jpg" data-caption="Frente al espejo con tu corona — Mandando un piquito frente al espejo con tu anillo de corona. Mi verdadera y eterna princesa.">
+          <div class="polaroid-tape" aria-hidden="true"></div>
+          <div class="polaroid-img-wrap">
+            <img src="assets/foto-13.jpg" alt="Frente al espejo con tu corona" loading="lazy">
+          </div>
+          <div class="polaroid-content">
+            <span class="polaroid-num-badge">Recuerdo #13 ♡</span>
+            <h3 class="polaroid-title">Frente al espejo con tu corona</h3>
+            <p class="polaroid-desc">Mandando un piquito frente al espejo con tu anillo de corona. Mi verdadera y eterna princesa.</p>
+            <span class="zoom-hint">🔍 Toca para ampliar</span>
+          </div>
+        </article>
+
+        <article class="polaroid-card" data-full="assets/foto-14.jpg" data-caption="Tus ojitos dulces de cerca — Esa mirada dulce que me desarma y me recuerda lo afortunado que soy de tenerte a mi lado.">
+          <div class="polaroid-tape" aria-hidden="true"></div>
+          <div class="polaroid-img-wrap">
+            <img src="assets/foto-14.jpg" alt="Tus ojitos dulces de cerca" loading="lazy">
+          </div>
+          <div class="polaroid-content">
+            <span class="polaroid-num-badge">Recuerdo #14 ♡</span>
+            <h3 class="polaroid-title">Tus ojitos dulces de cerca</h3>
+            <p class="polaroid-desc">Esa mirada dulce que me desarma y me recuerda lo afortunado que soy de tenerte a mi lado.</p>
+            <span class="zoom-hint">🔍 Toca para ampliar</span>
+          </div>
+        </article>
+
+        <article class="polaroid-card" data-full="assets/foto-15.jpg" data-caption="Momentos espontáneos llenos de vida — Sin poses ni filtros, solo tú y yo siendo completamente nosotros mismos. Cómplices en cada risa.">
+          <div class="polaroid-tape" aria-hidden="true"></div>
+          <div class="polaroid-img-wrap">
+            <img src="assets/foto-15.jpg" alt="Momentos espontáneos llenos de vida" loading="lazy">
+          </div>
+          <div class="polaroid-content">
+            <span class="polaroid-num-badge">Recuerdo #15 ♡</span>
+            <h3 class="polaroid-title">Momentos espontáneos llenos de vida</h3>
+            <p class="polaroid-desc">Sin poses ni filtros, solo tú y yo siendo completamente nosotros mismos. Cómplices en cada risa.</p>
+            <span class="zoom-hint">🔍 Toca para ampliar</span>
+          </div>
+        </article>
+
+        <article class="polaroid-card" data-full="assets/foto-16.jpg" data-caption="Nuestras locuras compartidas — Porque a tu lado hasta el instante más sencillo se convierte en una aventura que guardo en el corazón.">
+          <div class="polaroid-tape" aria-hidden="true"></div>
+          <div class="polaroid-img-wrap">
+            <img src="assets/foto-16.jpg" alt="Nuestras locuras compartidas" loading="lazy">
+          </div>
+          <div class="polaroid-content">
+            <span class="polaroid-num-badge">Recuerdo #16 ♡</span>
+            <h3 class="polaroid-title">Nuestras locuras compartidas</h3>
+            <p class="polaroid-desc">Porque a tu lado hasta el instante más sencillo se convierte en una aventura que guardo en el corazón.</p>
+            <span class="zoom-hint">🔍 Toca para ampliar</span>
+          </div>
+        </article>
+
+        <article class="polaroid-card" data-full="assets/foto-17.jpg" data-caption="Juntos en cada paso del camino — Construyendo un amor real, que aprende de los errores y se hace más fuerte cada día.">
+          <div class="polaroid-tape" aria-hidden="true"></div>
+          <div class="polaroid-img-wrap">
+            <img src="assets/foto-17.jpg" alt="Juntos en cada paso del camino" loading="lazy">
+          </div>
+          <div class="polaroid-content">
+            <span class="polaroid-num-badge">Recuerdo #17 ♡</span>
+            <h3 class="polaroid-title">Juntos en cada paso del camino</h3>
+            <p class="polaroid-desc">Construyendo un amor real, que aprende de los errores y se hace más fuerte cada día.</p>
+            <span class="zoom-hint">🔍 Toca para ampliar</span>
+          </div>
+        </article>
+
+        <article class="polaroid-card" data-full="assets/foto-18.jpg" data-caption="Mirarte y agradecer a la vida — No hay paisaje en el mundo que se compare a la paz que me da verte a los ojos.">
+          <div class="polaroid-tape" aria-hidden="true"></div>
+          <div class="polaroid-img-wrap">
+            <img src="assets/foto-18.jpg" alt="Mirarte y agradecer a la vida" loading="lazy">
+          </div>
+          <div class="polaroid-content">
+            <span class="polaroid-num-badge">Recuerdo #18 ♡</span>
+            <h3 class="polaroid-title">Mirarte y agradecer a la vida</h3>
+            <p class="polaroid-desc">No hay paisaje en el mundo que se compare a la paz que me da verte a los ojos.</p>
+            <span class="zoom-hint">🔍 Toca para ampliar</span>
+          </div>
+        </article>
+
+        <article class="polaroid-card" data-full="assets/foto-19.jpg" data-caption="Un abrazo de esos que no se olvidan — Apretados fuerte, sintiendo que no hace falta nada más en el mundo porque estás tú.">
+          <div class="polaroid-tape" aria-hidden="true"></div>
+          <div class="polaroid-img-wrap">
+            <img src="assets/foto-19.jpg" alt="Un abrazo de esos que no se olvidan" loading="lazy">
+          </div>
+          <div class="polaroid-content">
+            <span class="polaroid-num-badge">Recuerdo #19 ♡</span>
+            <h3 class="polaroid-title">Un abrazo de esos que no se olvidan</h3>
+            <p class="polaroid-desc">Apretados fuerte, sintiendo que no hace falta nada más en el mundo porque estás tú.</p>
+            <span class="zoom-hint">🔍 Toca para ampliar</span>
+          </div>
+        </article>
+
+        <article class="polaroid-card" data-full="assets/foto-20.jpg" data-caption="Para siempre mi pequeña princesa — Te elijo hoy, te elegiré mañana y te elegiré siempre. Perdóname, no te quiero perder jamás.">
+          <div class="polaroid-tape" aria-hidden="true"></div>
+          <div class="polaroid-img-wrap">
+            <img src="assets/foto-20.jpg" alt="Para siempre mi pequeña princesa" loading="lazy">
+          </div>
+          <div class="polaroid-content">
+            <span class="polaroid-num-badge">Recuerdo #20 ♡</span>
+            <h3 class="polaroid-title">Para siempre mi pequeña princesa</h3>
+            <p class="polaroid-desc">Te elijo hoy, te elegiré mañana y te elegiré siempre. Perdóname, no te quiero perder jamás.</p>
+            <span class="zoom-hint">🔍 Toca para ampliar</span>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- SECCIÓN DE NUESTROS VIDEOS JUNTOS (8 VIDEOS) -->
+    <section class="video-cinema-section layout-wrap">
+      <div class="cinema-header">
+        <div class="cute-badge sapo-badge">
+          <span class="badge-icon">🎬</span>
+          <span>Nuestra Película Juntos</span>
+        </div>
+        <h2>Nuestros Videos Favoritos (8 Momentos Especiales)</h2>
+        <p>Toca cualquiera de los momentos abajo para revivir nuestros videos en la pantalla:</p>
+      </div>
+
+      <div class="cinema-player-card">
+        <div class="cinema-screen">
+          <video id="main-memory-video" class="cinema-video-elem" controls preload="metadata" poster="assets/foto-8.jpg" playsinline>
+            <source src="assets/video-1.mp4" type="video/mp4">
+            Tu navegador no soporta el video.
+          </video>
+        </div>
+        <div class="cinema-controls-bar">
+          <span id="current-video-title" class="video-now-playing">▶ Momento 1: Risas y Recuerdos Inolvidables</span>
+        </div>
+      </div>
+
+      <!-- Lista de los 8 videos interactivos -->
+      <div class="video-playlist-grid">
+        <button class="video-chip active" type="button" data-video-src="assets/video-1.mp4" data-video-title="Momento 1: Risas y Recuerdos Inolvidables">
+          <span class="chip-play">▶</span>
+          <span class="chip-text">Video 1: Risas juntos</span>
+        </button>
+        <button class="video-chip" type="button" data-video-src="assets/video-2.mp4" data-video-title="Momento 2: Cómplices siempre">
+          <span class="chip-play">▶</span>
+          <span class="chip-text">Video 2: Cómplices</span>
+        </button>
+        <button class="video-chip" type="button" data-video-src="assets/video-3.mp4" data-video-title="Momento 3: Mi pequeña princesa">
+          <span class="chip-play">▶</span>
+          <span class="chip-text">Video 3: Mi princesa</span>
+        </button>
+        <button class="video-chip" type="button" data-video-src="assets/video-4.mp4" data-video-title="Momento 4: Días inolvidables a tu lado">
+          <span class="chip-play">▶</span>
+          <span class="chip-text">Video 4: Días únicos</span>
+        </button>
+        <button class="video-chip" type="button" data-video-src="assets/video-5.mp4" data-video-title="Momento 5: Un abrazo directo al corazón">
+          <span class="chip-play">▶</span>
+          <span class="chip-text">Video 5: Abrazo al corazón</span>
+        </button>
+        <button class="video-chip" type="button" data-video-src="assets/video-6.mp4" data-video-title="Momento 6: Nuestra gran aventura">
+          <span class="chip-play">▶</span>
+          <span class="chip-text">Video 6: Nuestra aventura</span>
+        </button>
+        <button class="video-chip" type="button" data-video-src="assets/video-7.mp4" data-video-title="Momento 7: Te amo con todo mi ser">
+          <span class="chip-play">▶</span>
+          <span class="chip-text">Video 7: Te amo tanto</span>
+        </button>
+        <button class="video-chip" type="button" data-video-src="assets/video-8.mp4" data-video-title="Momento 8: Para toda la vida">
+          <span class="chip-play">▶</span>
+          <span class="chip-text">Video 8: Para siempre</span>
+        </button>
+      </div>
+    </section>
+
+    <!-- Botiquín del Amor Interactivo (Doctora Juguetes) -->
+    <section class="doc-first-aid-section layout-wrap">
+      <div class="first-aid-card">
+        <div class="first-aid-header">
+          <span class="aid-cross">🩹</span>
+          <h2>El Botiquín para Sanar Nuestro Amor</h2>
+          <p>Toca cada curita para descubrir una razón por la que te pido perdón y elijo quedarme a tu lado:</p>
+        </div>
+        <div class="bandages-grid">
+          <button class="bandage-btn" type="button" data-bandage="1">
+            <span class="bandage-shape">🩹</span>
+            <span class="bandage-title">Curita #1: Por mis errores</span>
+            <span class="bandage-msg">Perdón por los momentos en que fui descuidado o no te escuché con la atención que mereces. Te valoro infinito y voy a cambiar.</span>
+          </button>
+          <button class="bandage-btn" type="button" data-bandage="2">
+            <span class="bandage-shape">🩹</span>
+            <span class="bandage-title">Curita #2: Por mis palabras</span>
+            <span class="bandage-msg">Si alguna vez dije algo que te lastimó, lo siento desde lo más hondo de mi alma. Tu corazón es sagrado para mí.</span>
+          </button>
+          <button class="bandage-btn" type="button" data-bandage="3">
+            <span class="bandage-shape">🩹</span>
+            <span class="bandage-title">Curita #3: Mi promesa</span>
+            <span class="bandage-msg">Prometo ser más paciente, cuidarte cada día, cocinarte con amor y demostrarte con hechos que eres mi prioridad.</span>
+          </button>
+          <button class="bandage-btn" type="button" data-bandage="4">
+            <span class="bandage-shape">🩹</span>
+            <span class="bandage-title">Curita #4: No te quiero perder</span>
+            <span class="bandage-msg">No me imagino mi vida sin ti. Eres mi pequeña princesa, mi compañera y la persona que elijo hoy, mañana y siempre.</span>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Poema Romántico Dedicado -->
+    <section class="poem-section">
+      <div class="poem-inner">
+        <span class="poem-flower" aria-hidden="true">🌸</span>
+        <p class="eyebrow">Un poema para pedirte perdón</p>
+        <h2>Si tuviera que elegirte de nuevo</h2>
+        <blockquote>
+          <p>
+            Te elegiría en la cocina, en la cama viendo el teléfono,<br>
+            te elegiría en las videollamadas de madrugada y en cada despertar.<br>
+            Te pediría perdón mil veces si con eso limpio cualquier duda,<br>
+            y te abrazaría tan fuerte como cuando duermes en mi pecho.<br><br>
+            Como Ray miraba a su amada Evangeline en el cielo,<br>
+            sé que entre millones de personas en el mundo,<br>
+            la mía solo sabe pronunciar tu nombre.
+          </p>
+        </blockquote>
+        <p class="poem-signature">Con todo mi amor y arrepentimiento sincero, siempre para ti.</p>
+      </div>
+    </section>
+
+    <!-- Carta Íntima de Disculpa -->
+    <section class="letter-section layout-wrap">
+      <div class="letter-card-container">
+        <div class="letter-seal" aria-hidden="true">💌</div>
+        <p class="eyebrow">Una carta desde lo más profundo</p>
+        <h2>Perdóname, mi amor.</h2>
+        <div class="letter-content-body">
+          <p>
+            Escribo esto con el corazón en la mano. Sé que he cometido errores y me duele pensar que te hice dudar de cuánto te amo o de lo importante que eres para mí. No pretendo justificarme, porque no hay justificación para hacerte sentir mal.
+          </p>
+          <p>
+            Solo quiero pedirte una oportunidad para demostrarte que puedo aprender, que puedo ser mejor para ti y que mi intención diaria es cuidarte, respetarte y hacerte sonreír como en esa foto donde los dos tenemos gafas y sonreímos felices.
+          </p>
+          <p class="letter-emphasis">
+            <strong>No te quiero perder.</strong> Eres mi princesa y mi sueño cumplido.
+          </p>
+        </div>
+        <div class="letter-buttons-row">
+          <a class="return-button" href="index.html">
+            <span aria-hidden="true">🌹</span> Volver a ver mi rosa encantada
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Modal Lightbox para fotos ampliadas en HD -->
+  <dialog id="photo-modal" class="photo-modal" aria-label="Ver recuerdo en grande">
+    <div class="modal-card">
+      <button class="close-modal-btn" type="button" id="close-modal-btn" aria-label="Cerrar modal">✕</button>
+      <div id="modal-img-container" class="modal-img-container"></div>
+      <p id="modal-caption" class="modal-caption"></p>
+    </div>
+  </dialog>
+
+  <!-- Pie de página -->
+  <footer class="site-footer">
+    <div class="footer-left">
+      <span class="footer-heart">♥</span>
+      <span>Con todo el amor de mi corazón para ti, Isabel.</span>
+    </div>
+    <div class="footer-right">
+      <a class="footer-link" href="index.html">← Volver a la Rosa</a>
+    </div>
+  </footer>
+
+  <!-- Audio de fondo -->
+  <audio id="site-audio" loop preload="auto" aria-label="Nuestra canción"></audio>
+</body>
+</html>

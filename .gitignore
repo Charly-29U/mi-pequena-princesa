@@ -1,0 +1,7 @@
+# Raw duplicate files in root (already organized in assets/)
+WhatsApp*
+\#1.jpeg
+Captura de pantalla*
+*.tmp
+.DS_Store
+Thumbs.db
