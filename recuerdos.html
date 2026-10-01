@@ -16,6 +16,13 @@
   <!-- Fondo dinámico de luciérnagas de Ray y pétalos de rosa -->
   <canvas id="ambient-canvas" class="ambient-canvas" aria-hidden="true"></canvas>
 
+  <!-- Efectos de Modo Noche: Ray volando y halo de linterna mágica -->
+  <div id="flashlight-halo" class="flashlight-halo" aria-hidden="true"></div>
+  <div id="flying-ray" class="flying-ray" aria-hidden="true">
+    <div class="ray-glow-aura"></div>
+    <span class="ray-sprite">✨💡</span>
+  </div>
+
   <!-- Estrella Evangeline -->
   <div class="evangeline-star" title="Evangeline, la estrella más brillante" aria-hidden="true">
     <span class="star-sparkle">✦</span>
@@ -32,18 +39,26 @@
       </div>
     </a>
 
-    <div class="music-player-bar">
-      <button class="music-button" type="button" data-music-toggle aria-label="Reproducir nuestra canción" title="Reproducir música romántica">
-        <span class="music-disc" aria-hidden="true">
-          <span class="music-note-icon">🎵</span>
-        </span>
-        <div class="music-info">
-          <span class="music-title-text" data-music-label>Nuestra Canción (La Princesa y el Sapo)</span>
-          <span class="music-status-sub">Ma Belle Evangeline</span>
-        </div>
+    <div class="topbar-actions">
+      <!-- Botón de Modo Noche de Luciérnagas / Ray (Opción 4) -->
+      <button class="night-mode-toggle" id="night-mode-btn" type="button" aria-label="Activar Modo Noche de Ray" title="Activar noche mágica en el pantano con Ray">
+        <span class="toggle-icon">🌙</span>
+        <span class="toggle-text">Noche de Ray</span>
       </button>
-      <div class="audio-waves" aria-hidden="true">
-        <span></span><span></span><span></span><span></span>
+
+      <div class="music-player-bar">
+        <button class="music-button" type="button" data-music-toggle aria-label="Reproducir nuestra canción" title="Reproducir música romántica">
+          <span class="music-disc" aria-hidden="true">
+            <span class="music-note-icon">🎵</span>
+          </span>
+          <div class="music-info">
+            <span class="music-title-text" data-music-label>Nuestra Canción (La Princesa y el Sapo)</span>
+            <span class="music-status-sub">Ma Belle Evangeline</span>
+          </div>
+        </button>
+        <div class="audio-waves" aria-hidden="true">
+          <span></span><span></span><span></span><span></span>
+        </div>
       </div>
     </div>
   </header>
@@ -450,6 +465,164 @@
       </div>
     </section>
 
+    <!-- SECCIÓN 5: GIRASOL QUE FLORECE (INTERACTIVO) -->
+    <section class="sunflower-interactive-section layout-wrap" id="girasol-section" aria-label="Girasol que florece con amor">
+      <div class="sunflower-card-box">
+        <div class="cute-badge sunflower-badge">
+          <span class="badge-icon">🌻</span>
+          <span>Tú eres mi sol en días nublados</span>
+        </div>
+        <h2 class="section-title">El Girasol que Florece por Ti</h2>
+        <p class="section-subtitle">
+          Los girasoles siempre buscan la luz... y mi corazón siempre te busca a ti. <strong>Toca el girasol o el botón</strong> para abrir sus pétalos y descubrir cada razón por la que te adoro:
+        </p>
+
+        <div class="sunflower-interactive-display">
+          <div class="sunflower-stage" id="sunflower-stage" role="button" tabindex="0" aria-label="Tocar girasol para florecer">
+            <!-- Tallo y hojas -->
+            <div class="sunflower-stem"></div>
+            <div class="sunflower-leaf leaf-left"></div>
+            <div class="sunflower-leaf leaf-right"></div>
+            
+            <!-- Flor completa -->
+            <div class="sunflower-head" id="sunflower-head">
+              <!-- Pétalos (8 pétalos que se abren uno por uno) -->
+              <div class="sunflower-petal petal-1" data-petal="1"></div>
+              <div class="sunflower-petal petal-2" data-petal="2"></div>
+              <div class="sunflower-petal petal-3" data-petal="3"></div>
+              <div class="sunflower-petal petal-4" data-petal="4"></div>
+              <div class="sunflower-petal petal-5" data-petal="5"></div>
+              <div class="sunflower-petal petal-6" data-petal="6"></div>
+              <div class="sunflower-petal petal-7" data-petal="7"></div>
+              <div class="sunflower-petal petal-8" data-petal="8"></div>
+              
+              <!-- Centro del girasol -->
+              <div class="sunflower-center">
+                <span class="center-heart">🌻</span>
+                <span class="center-sparkle">✨</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="sunflower-info-box">
+            <div class="bloom-counter-badge" id="bloom-counter-badge">Pétalos abiertos: 0 / 8</div>
+            <div class="sunflower-phrase-bubble" id="sunflower-phrase-bubble">
+              <span class="bubble-icon">✨</span>
+              <p class="bubble-text" id="sunflower-bubble-text">¡Toca el botón o el girasol para abrir el primer pétalo!</p>
+            </div>
+            <div class="sunflower-controls">
+              <button class="romantic-action-btn bloom-btn" id="btn-bloom-petal" type="button">
+                <span>🌻 Tocar para Florecer</span>
+              </button>
+              <button class="romantic-secondary-btn" id="btn-reset-sunflower" type="button">
+                <span>Reiniciar 🔄</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECCIÓN 2: TARJETA RASPA Y GANA DEL AMOR (CANVAS INTERACTIVO) -->
+    <section class="scratch-card-section layout-wrap" id="raspa-gana-section" aria-label="Tarjeta Raspa y Gana">
+      <div class="scratch-card-wrapper">
+        <div class="cute-badge scratch-badge">
+          <span class="badge-icon">🍀</span>
+          <span>Juego Interactivo</span>
+        </div>
+        <h2 class="section-title">Tarjeta «Raspa y Gana» de Nuestro Amor</h2>
+        <p class="section-subtitle">
+          Usa tu dedo (en el celular) o el ratón para raspar la lámina dorada y descubrir la sorpresa que tengo para ti:
+        </p>
+
+        <div class="scratch-card-container">
+          <div class="scratch-card-inner" id="scratch-card-box">
+            <!-- Capa oculta con premio y foto -->
+            <div class="scratch-hidden-content">
+              <div class="scratch-photo-wrap">
+                <img src="assets/foto-7.jpg" alt="Un beso eterno" class="scratch-reveal-img">
+              </div>
+              <div class="scratch-prize-text">
+                <span class="prize-trophy">🏆 ¡PREMIO MAYOR! 💖</span>
+                <h3>¡Te has ganado mi corazón por siempre!</h3>
+                <p>Vale por: Un millón de besitos, abrazos eternos cada noche y la promesa inquebrantable de cuidarte y respetarte siempre.</p>
+                <span class="prize-tag">👑 Certificado oficial para mi Princesa Isabel ♡</span>
+              </div>
+            </div>
+
+            <!-- Capa rascable de Canvas -->
+            <canvas id="scratch-canvas" class="scratch-canvas" width="460" height="280"></canvas>
+          </div>
+
+          <div class="scratch-card-footer">
+            <div class="scratch-progress-indicator">
+              <span id="scratch-percent-text">Raspado: 0%</span>
+              <div class="scratch-progress-bar"><div id="scratch-progress-fill" style="width:0%"></div></div>
+            </div>
+            <button class="romantic-secondary-btn" id="btn-reset-scratch" type="button">
+              <span>Raspar de nuevo 🔄</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECCIÓN 1: EL FRASCO MÁGICO DE PROMESAS Y VALES (INTERACTIVO) -->
+    <section class="promises-jar-section layout-wrap" id="frasco-promesas-section" aria-label="Frasco de Promesas">
+      <div class="promises-jar-card">
+        <div class="cute-badge jar-badge">
+          <span class="badge-icon">🍯</span>
+          <span>Vales Reales e Infinitos</span>
+        </div>
+        <h2 class="section-title">El Frasco Mágico de Promesas y Vales</h2>
+        <p class="section-subtitle">
+          Este frasco contiene vales y promesas canjeables cuando tú quieras. Toca el frasco para sacar un papelito y leerlo:
+        </p>
+
+        <div class="jar-interactive-stage">
+          <!-- Frasco de cristal 3D con luz interior -->
+          <div class="glass-jar-display" id="magic-jar" role="button" tabindex="0" aria-label="Tocar frasco para sacar un vale">
+            <div class="jar-lid"></div>
+            <div class="jar-neck"></div>
+            <div class="jar-body">
+              <div class="jar-glow"></div>
+              <div class="jar-papers-inside">
+                <span class="mini-paper p1">📜</span>
+                <span class="mini-paper p2">🎟️</span>
+                <span class="mini-paper p3">💌</span>
+                <span class="mini-paper p4">✨</span>
+              </div>
+              <span class="jar-label-tag">Vales de Isabel ♡</span>
+            </div>
+            <span class="jar-tap-hint">👆 ¡Toca el frasco!</span>
+          </div>
+
+          <!-- Área del Vale Desplegado -->
+          <div class="drawn-ticket-display" id="drawn-ticket-box">
+            <div class="ticket-card" id="active-ticket-card">
+              <div class="ticket-stamp">VÁLIDO DE POR VIDA</div>
+              <div class="ticket-header">
+                <span class="ticket-icon" id="ticket-icon">🎟️</span>
+                <span class="ticket-category" id="ticket-category">VALE OFICIAL</span>
+              </div>
+              <h3 class="ticket-title" id="ticket-title">¡Toca el frasco para tu primer vale!</h3>
+              <p class="ticket-desc" id="ticket-desc">Descubre promesas de amor, días de consentirte y vales sin fecha de vencimiento.</p>
+              <div class="ticket-footer">
+                <span class="ticket-signature">Firmado: Charly con todo su amor ♥</span>
+              </div>
+            </div>
+
+            <div class="jar-controls-row">
+              <button class="romantic-action-btn" id="btn-draw-ticket" type="button">
+                <span>🎟️ Sacar otro Vale</span>
+              </button>
+              <span class="jar-counter-text" id="jar-counter-text">Vales leídos: 0 de 10</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <!-- Botiquín del Amor Interactivo (Doctora Juguetes) -->
     <section class="doc-first-aid-section layout-wrap">
       <div class="first-aid-card">
@@ -480,6 +653,64 @@
             <span class="bandage-msg">No me imagino mi vida sin ti. Eres mi pequeña princesa, mi compañera y la persona que elijo hoy, mañana y siempre.</span>
           </button>
         </div>
+
+        <!-- AMOR-ÓMETRO DE LA DOCTORA JUGUETES (OPCIÓN 3) -->
+        <div class="love-meter-card" id="amorometro-box">
+          <div class="meter-header">
+            <span class="meter-icon">🩺💓</span>
+            <div>
+              <h3>El Amor-ómetro de la Doctora Juguetes</h3>
+              <p>Instrumento oficial de la clínica para medir cuánto te amo:</p>
+            </div>
+          </div>
+
+          <div class="meter-interactive-container">
+            <div class="thermometer-visual">
+              <div class="thermometer-glass">
+                <div class="mercury-track">
+                  <div class="mercury-fill" id="mercury-fill">
+                    <div class="mercury-bubbles"></div>
+                  </div>
+                </div>
+                <div class="thermometer-bulb">
+                  <span class="bulb-heart">💖</span>
+                </div>
+              </div>
+              <div class="thermometer-scale">
+                <span class="scale-overflow">1000% ¡EXPLOSIÓN! 🔥</span>
+                <span>100% Amor eterno</span>
+                <span>75% Loco por ti</span>
+                <span>50% Mucho amor</span>
+                <span>25% Cariño</span>
+                <span>0%</span>
+              </div>
+            </div>
+
+            <div class="meter-actions-panel">
+              <div class="meter-display-box">
+                <span class="meter-readout" id="meter-readout">0%</span>
+                <span class="meter-readout-sub">Índice de Amor</span>
+              </div>
+              <p class="meter-status" id="meter-status">Presiona el botón para iniciar el chequeo médico...</p>
+              <button class="romantic-action-btn meter-btn" id="btn-measure-love" type="button">
+                <span>🩺 ¡Hacer Chequeo de Amor!</span>
+              </button>
+
+              <!-- Tarjeta de diagnóstico que se activa al llegar a 1000% -->
+              <div class="doctor-rx-card" id="doctor-rx-card" hidden>
+                <div class="rx-header">
+                  <span>📋 RECETA MÉDICA OFICIAL</span>
+                  <span>Dra. Juguetes 🩺</span>
+                </div>
+                <div class="rx-body">
+                  <p><strong>Paciente:</strong> Princesa Isabel 👑</p>
+                  <p><strong>Diagnóstico:</strong> Desbordamiento crítico de amor y ternura incalculable. Nivel supera los límites de la ciencia (1000%).</p>
+                  <p><strong>Tratamiento prescrito:</strong> 1 beso de buenos días, 3 abrazos apretados diarios, mimitos cada noche y que Charly te demuestre siempre que eres su mayor tesoro.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </section>
 
@@ -504,27 +735,137 @@
       </div>
     </section>
 
-    <!-- Carta Íntima de Disculpa -->
-    <section class="letter-section layout-wrap">
-      <div class="letter-card-container">
-        <div class="letter-seal" aria-hidden="true">💌</div>
-        <p class="eyebrow">Una carta desde lo más profundo</p>
-        <h2>Perdóname, mi amor.</h2>
-        <div class="letter-content-body">
-          <p>
-            Escribo esto con el corazón en la mano. Sé que he cometido errores y me duele pensar que te hice dudar de cuánto te amo o de lo importante que eres para mí. No pretendo justificarme, porque no hay justificación para hacerte sentir mal.
-          </p>
-          <p>
-            Solo quiero pedirte una oportunidad para demostrarte que puedo aprender, que puedo ser mejor para ti y que mi intención diaria es cuidarte, respetarte y hacerte sonreír como en esa foto donde los dos tenemos gafas y sonreímos felices.
-          </p>
-          <p class="letter-emphasis">
-            <strong>No te quiero perder.</strong> Eres mi princesa y mi sueño cumplido.
-          </p>
+    <!-- SECCIÓN DE NOTA DE VOZ PERSONAL (AUDIO REAL DE CHARLY) -->
+    <section class="voice-note-section layout-wrap" id="nota-voz-section" aria-label="Nota de voz para ti">
+      <div class="voice-note-card">
+        <div class="cute-badge voice-badge">
+          <span class="badge-icon">🎙️</span>
+          <span>Mensaje de mi Propia Voz</span>
         </div>
-        <div class="letter-buttons-row">
-          <a class="return-button" href="index.html">
-            <span aria-hidden="true">🌹</span> Volver a ver mi rosa encantada
-          </a>
+        <h2 class="voice-note-heading">Escucha lo que mi corazón tiene que decirte</h2>
+        <p class="voice-note-subtitle">
+          A veces las palabras escritas no alcanzan... por eso grabé esto con toda mi sinceridad y amor solo para ti:
+        </p>
+
+        <div class="voice-player-widget">
+          <!-- Avatar con foto -->
+          <div class="voice-avatar-wrap">
+            <img src="assets/foto-8.jpg" alt="Charly & Isabel" class="voice-avatar-img">
+            <span class="voice-mic-badge">🎙️</span>
+          </div>
+
+          <div class="voice-player-main">
+            <div class="voice-meta-top">
+              <span class="voice-sender-name">Charly ♡</span>
+              <span class="voice-duration-label" id="voice-duration-text">0:00 / 1:19</span>
+            </div>
+
+            <!-- Botón y Forma de Onda -->
+            <div class="voice-controls-row">
+              <button class="voice-play-btn" id="voice-play-btn" type="button" aria-label="Reproducir nota de voz">
+                <span class="voice-play-icon" id="voice-play-icon">▶</span>
+              </button>
+
+              <div class="voice-wave-container" id="voice-wave-container" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
+                <div class="voice-wave-bars" id="voice-wave-bars">
+                  <!-- Barras animadas de onda de audio -->
+                  <span></span><span></span><span></span><span></span><span></span>
+                  <span></span><span></span><span></span><span></span><span></span>
+                  <span></span><span></span><span></span><span></span><span></span>
+                  <span></span><span></span><span></span><span></span><span></span>
+                  <span></span><span></span><span></span><span></span><span></span>
+                  <span></span><span></span><span></span>
+                </div>
+                <div class="voice-progress-tracker" id="voice-progress-tracker">
+                  <div class="voice-progress-fill" id="voice-progress-fill"></div>
+                </div>
+              </div>
+            </div>
+
+            <div class="voice-meta-bottom">
+              <span class="voice-status-hint" id="voice-status-hint">Toca ▶ para escuchar mi voz con el corazón</span>
+              <span class="voice-hearts-pulse" aria-hidden="true">💖✨</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Audio Element -->
+        <audio id="personal-voice-audio" preload="metadata">
+          <source src="assets/nota-voz.ogg" type="audio/ogg; codecs=opus">
+          <source src="assets/audio.ogg" type="audio/ogg">
+          <source src="Audio.ogg" type="audio/ogg">
+        </audio>
+      </div>
+    </section>
+
+    <!-- Carta Íntima de Disculpa con Sobre Interactivo y Sello de Cera -->
+    <section class="letter-section layout-wrap" id="carta-section">
+      <div class="letter-wrapper">
+        <div class="envelope-outer" id="envelope-outer">
+          <!-- Sobre Vintage con Sello de Cera -->
+          <div class="vintage-envelope" id="vintage-envelope">
+            <div class="envelope-back"></div>
+            <div class="envelope-letter-slip" id="envelope-letter-slip">
+              <span class="letter-slip-title">Para mi amada Isabel 💌</span>
+              <span class="letter-slip-sub">Toca el sello para desdoblar</span>
+            </div>
+            <div class="envelope-flap-fold" id="envelope-flap-fold"></div>
+            <div class="envelope-front-pocket"></div>
+            
+            <!-- Botón de Sello de Cera -->
+            <button class="wax-seal-btn" id="wax-seal-btn" type="button" aria-label="Abrir carta romántica">
+              <span class="wax-ring"></span>
+              <span class="wax-center">👑</span>
+              <span class="wax-text-sub">Toca para abrir</span>
+            </button>
+          </div>
+
+          <!-- Carta Desplegada Completa -->
+          <div class="unfolded-letter-card" id="unfolded-letter-card">
+            <div class="letter-vintage-header">
+              <span class="letter-seal-symbol" aria-hidden="true">💌</span>
+              <p class="eyebrow">Una carta desde lo más profundo</p>
+              <h2>Perdóname, mi amor.</h2>
+            </div>
+
+            <div class="letter-content-body">
+              <p>
+                Escribo esto con el corazón en la mano. Sé que he cometido errores y me duele pensar que te hice dudar de cuánto te amo o de lo importante que eres para mí. No pretendo justificarme, porque no hay justificación para hacerte sentir mal.
+              </p>
+              <p>
+                Solo quiero pedirte una oportunidad para demostrarte que puedo aprender, que puedo ser mejor para ti y que mi intención diaria es cuidarte, respetarte y hacerte sonreír como en esa foto donde los dos tenemos gafas y sonreímos felices.
+              </p>
+              <p class="letter-emphasis">
+                <strong>No te quiero perder.</strong> Eres mi princesa y mi sueño cumplido.
+              </p>
+            </div>
+
+            <!-- PREGUNTA INTERACTIVA: ¿ME PERDONAS? -->
+            <div class="forgiveness-interactive-zone" id="forgiveness-zone">
+              <h3 class="forgiveness-prompt">¿Me perdonas, mi pequeña princesa? 🥺👉👈</h3>
+              <div class="forgiveness-actions" id="forgiveness-actions">
+                <button class="btn-forgive-yes" id="btn-forgive-yes" type="button">
+                  <span>¡Sí, te perdono! 🥰💖</span>
+                </button>
+                <button class="btn-forgive-no" id="btn-forgive-no" type="button">
+                  <span>Déjame pensarlo... 😜</span>
+                </button>
+              </div>
+
+              <!-- Mensaje de Celebración del Perdón -->
+              <div class="forgiveness-celebration" id="forgiveness-celebration" hidden>
+                <div class="celebration-sparkles">🎉💖💍✨</div>
+                <h4>¡GRACIAS POR TU CORAZÓN, MI AMOR!</h4>
+                <p>Prometo cuidarte, respetarte, cocinarte delicioso y hacerte la mujer más feliz del mundo cada día. ¡No te fallaré jamás!</p>
+              </div>
+            </div>
+
+            <div class="letter-buttons-row">
+              <a class="return-button" href="index.html">
+                <span aria-hidden="true">🌹</span> Volver a ver mi rosa encantada
+              </a>
+            </div>
+          </div>
         </div>
       </div>
     </section>

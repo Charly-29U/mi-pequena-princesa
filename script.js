@@ -13,6 +13,16 @@ document.addEventListener('DOMContentLoaded', () => {
   initQRModal();
   initMediaAndGallery();
   initDocBandages();
+
+  // Las 5 Nuevas Funciones Románticas
+  initNightMode();
+  initSunflower();
+  initScratchCard();
+  initPromisesJar();
+  initLoveMeter();
+  initWaxSealEnvelope();
+  initFairyDustTrail();
+  initPersonalVoiceNote();
 });
 
 /* ==========================================================
@@ -773,3 +783,796 @@ function initFallingLoveWords() {
 
   setInterval(createFallingText, 300);
 }
+
+/* ==========================================================
+   SINTETIZADOR DE SONIDOS SUAVES (WEB AUDIO API NATIVO)
+   ========================================================== */
+function playRomanticChime(type = 'bell') {
+  try {
+    const AudioCtx = window.AudioContext || window.webkitAudioContext;
+    if (!AudioCtx) return;
+    const ctx = new AudioCtx();
+    const osc = ctx.createOscillator();
+    const gain = ctx.createGain();
+
+    osc.connect(gain);
+    gain.connect(ctx.destination);
+
+    const now = ctx.currentTime;
+    if (type === 'bell') {
+      osc.type = 'sine';
+      osc.frequency.setValueAtTime(587.33, now); // D5
+      osc.frequency.exponentialRampToValueAtTime(880, now + 0.3); // A5
+      gain.gain.setValueAtTime(0.15, now);
+      gain.gain.exponentialRampToValueAtTime(0.001, now + 0.6);
+      osc.start(now);
+      osc.stop(now + 0.6);
+    } else if (type === 'sparkle') {
+      osc.type = 'triangle';
+      osc.frequency.setValueAtTime(783.99, now); // G5
+      osc.frequency.exponentialRampToValueAtTime(1174.66, now + 0.25); // D6
+      gain.gain.setValueAtTime(0.12, now);
+      gain.gain.exponentialRampToValueAtTime(0.001, now + 0.4);
+      osc.start(now);
+      osc.stop(now + 0.4);
+    } else if (type === 'fanfare') {
+      // Doble nota de celebración
+      osc.type = 'sine';
+      osc.frequency.setValueAtTime(523.25, now); // C5
+      osc.frequency.setValueAtTime(659.25, now + 0.12); // E5
+      osc.frequency.setValueAtTime(783.99, now + 0.24); // G5
+      osc.frequency.setValueAtTime(1046.50, now + 0.36); // C6
+      gain.gain.setValueAtTime(0.2, now);
+      gain.gain.exponentialRampToValueAtTime(0.001, now + 0.9);
+      osc.start(now);
+      osc.stop(now + 0.9);
+    }
+  } catch (e) {
+    // Si el navegador bloquea audio, continúa silenciosamente
+  }
+}
+
+/* ==========================================================
+   FUNCIÓN 1: MODO NOCHE DE RAY & EVANGELINE (BAYOU NIGHT)
+   ========================================================== */
+function initNightMode() {
+  const toggleBtn = document.getElementById('night-mode-btn');
+  const halo = document.getElementById('flashlight-halo');
+
+  if (!toggleBtn) return;
+
+  let isNight = false;
+
+  toggleBtn.addEventListener('click', () => {
+    isNight = !isNight;
+    document.body.classList.toggle('bayou-night-mode', isNight);
+
+    const icon = toggleBtn.querySelector('.toggle-icon');
+    const text = toggleBtn.querySelector('.toggle-text');
+
+    if (isNight) {
+      if (icon) icon.textContent = '☀️';
+      if (text) text.textContent = 'Modo Día';
+      playRomanticChime('bell');
+      // Lanzar estrellas
+      const rect = toggleBtn.getBoundingClientRect();
+      createBurstParticle(rect.left + rect.width / 2, rect.top + rect.height / 2);
+    } else {
+      if (icon) icon.textContent = '🌙';
+      if (text) text.textContent = 'Noche de Ray';
+      playRomanticChime('sparkle');
+    }
+  });
+
+  // Movimiento del halo de linterna en modo noche
+  if (halo) {
+    window.addEventListener('pointermove', (e) => {
+      if (!isNight) return;
+      halo.style.left = `${e.clientX}px`;
+      halo.style.top = `${e.clientY}px`;
+    });
+
+    window.addEventListener('touchmove', (e) => {
+      if (!isNight || !e.touches[0]) return;
+      halo.style.left = `${e.touches[0].clientX}px`;
+      halo.style.top = `${e.touches[0].clientY}px`;
+    }, { passive: true });
+  }
+}
+
+/* ==========================================================
+   FUNCIÓN 2: GIRASOL QUE FLORECE (OPCIÓN 5)
+   ========================================================== */
+function initSunflower() {
+  const stage = document.getElementById('sunflower-stage');
+  const bloomBtn = document.getElementById('btn-bloom-petal');
+  const resetBtn = document.getElementById('btn-reset-sunflower');
+  const counterBadge = document.getElementById('bloom-counter-badge');
+  const bubbleText = document.getElementById('sunflower-bubble-text');
+  const petals = document.querySelectorAll('.sunflower-petal');
+
+  if (!stage || petals.length === 0) return;
+
+  const romanticReasons = [
+    "Tus ojitos hermosos y esa forma tan dulce en que me miras ♡",
+    "Tu risa contagiosa que ilumina hasta el día más gris ✨",
+    "La ternura y la bondad infinita que guardas en tu corazón 💖",
+    "La paz tan bonita que siento cuando duermes en mi pecho 🕊️",
+    "Tus piquitos coquetos y tus caricias que me devuelven la vida 😘",
+    "Cocinar con todo mi amor para ti y verte disfrutar comiendo 🍳",
+    "Nuestras videollamadas de madrugada y complicidad única 🌙",
+    "¡Porque eres mi pequeña princesa y te elijo hoy, mañana y siempre! 🌻👑"
+  ];
+
+  let currentPetal = 0;
+
+  function bloomNextPetal() {
+    if (currentPetal < petals.length) {
+      const petal = petals[currentPetal];
+      petal.classList.add('bloomed');
+
+      const phrase = romanticReasons[currentPetal];
+      if (bubbleText) {
+        bubbleText.textContent = phrase;
+        bubbleText.parentElement.style.transform = 'scale(1.04)';
+        setTimeout(() => {
+          if (bubbleText.parentElement) bubbleText.parentElement.style.transform = '';
+        }, 250);
+      }
+
+      currentPetal++;
+      if (counterBadge) {
+        counterBadge.textContent = `Pétalos abiertos: ${currentPetal} / ${petals.length}`;
+      }
+
+      playRomanticChime('sparkle');
+
+      // Partículas
+      const rect = petal.getBoundingClientRect();
+      createBurstParticle(rect.left + rect.width / 2, rect.top + rect.height / 2);
+
+      // Si se abrieron todos
+      if (currentPetal === petals.length) {
+        if (bloomBtn) {
+          bloomBtn.innerHTML = '<span>🌻 ¡Girasol Florecido Completo! ♡</span>';
+          bloomBtn.style.background = 'linear-gradient(135deg, #10b981 0%, #059669 100%)';
+        }
+        playRomanticChime('fanfare');
+        // Lluvia de corazones
+        for (let i = 0; i < 20; i++) {
+          setTimeout(() => {
+            const rx = window.innerWidth * 0.5 + (Math.random() - 0.5) * 250;
+            const ry = window.innerHeight * 0.45 + (Math.random() - 0.5) * 150;
+            createBurstParticle(rx, ry);
+          }, i * 60);
+        }
+      }
+    } else {
+      // Ya están todos abiertos, vibración cariñosa
+      if (bubbleText) {
+        bubbleText.textContent = "¡Eres mi sol eterno, mi princesa Isabel! 🌻💛";
+      }
+      playRomanticChime('bell');
+    }
+  }
+
+  function resetSunflower() {
+    currentPetal = 0;
+    petals.forEach(p => p.classList.remove('bloomed'));
+    if (counterBadge) counterBadge.textContent = `Pétalos abiertos: 0 / ${petals.length}`;
+    if (bubbleText) bubbleText.textContent = "¡Toca el botón o el girasol para abrir el primer pétalo!";
+    if (bloomBtn) {
+      bloomBtn.innerHTML = '<span>🌻 Tocar para Florecer</span>';
+      bloomBtn.style.background = '';
+    }
+    playRomanticChime('bell');
+  }
+
+  stage.addEventListener('click', bloomNextPetal);
+  if (bloomBtn) bloomBtn.addEventListener('click', bloomNextPetal);
+  if (resetBtn) resetBtn.addEventListener('click', resetSunflower);
+}
+
+/* ==========================================================
+   FUNCIÓN 3: TARJETA RASPA Y GANA DEL AMOR (OPCIÓN 2)
+   ========================================================== */
+function initScratchCard() {
+  const canvas = document.getElementById('scratch-canvas');
+  const percentText = document.getElementById('scratch-percent-text');
+  const progressFill = document.getElementById('scratch-progress-fill');
+  const resetBtn = document.getElementById('btn-reset-scratch');
+
+  if (!canvas) return;
+
+  const ctx = canvas.getContext('2d');
+  let isDrawing = false;
+  let isCleared = false;
+  let moveCount = 0;
+
+  function setupCanvas() {
+    canvas.width = canvas.offsetWidth || 460;
+    canvas.height = canvas.offsetHeight || 280;
+    canvas.style.opacity = '1';
+    canvas.style.pointerEvents = 'auto';
+    isCleared = false;
+    moveCount = 0;
+    if (percentText) percentText.textContent = 'Raspado: 0%';
+    if (progressFill) progressFill.style.width = '0%';
+
+    // Dibujar lámina de oro brillante
+    const grad = ctx.createLinearGradient(0, 0, canvas.width, canvas.height);
+    grad.addColorStop(0, '#f9d423');
+    grad.addColorStop(0.3, '#ff4e50');
+    grad.addColorStop(0.6, '#f9d423');
+    grad.addColorStop(1, '#e65c00');
+    ctx.fillStyle = grad;
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    // Patrón de destellos decorativos
+    ctx.fillStyle = 'rgba(255, 255, 255, 0.2)';
+    for (let i = 0; i < 40; i++) {
+      const rx = Math.random() * canvas.width;
+      const ry = Math.random() * canvas.height;
+      const rs = Math.random() * 4 + 2;
+      ctx.beginPath();
+      ctx.arc(rx, ry, rs, 0, Math.PI * 2);
+      ctx.fill();
+    }
+
+    // Texto guía
+    ctx.fillStyle = '#ffffff';
+    ctx.font = 'bold 20px "Plus Jakarta Sans", sans-serif';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.shadowColor = 'rgba(0, 0, 0, 0.4)';
+    ctx.shadowBlur = 6;
+    ctx.fillText('✨ RASPA AQUÍ CON TU DEDO O RATÓN ✨', canvas.width / 2, canvas.height / 2 - 12);
+
+    ctx.font = '14px "Plus Jakarta Sans", sans-serif';
+    ctx.fillText('Descubre tu sorpresa de amor ♡', canvas.width / 2, canvas.height / 2 + 18);
+
+    ctx.shadowColor = 'transparent';
+  }
+
+  setupCanvas();
+  window.addEventListener('resize', () => {
+    if (!isCleared) setupCanvas();
+  });
+
+  function getCoords(e) {
+    const rect = canvas.getBoundingClientRect();
+    const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+    const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+    return {
+      x: (clientX - rect.left) * (canvas.width / rect.width),
+      y: (clientY - rect.top) * (canvas.height / rect.height)
+    };
+  }
+
+  function scratch(e) {
+    if (!isDrawing || isCleared) return;
+    const pos = getCoords(e);
+
+    ctx.globalCompositeOperation = 'destination-out';
+    ctx.beginPath();
+    ctx.arc(pos.x, pos.y, 24, 0, Math.PI * 2);
+    ctx.fill();
+
+    moveCount++;
+    if (moveCount % 12 === 0) {
+      calculateProgress();
+    }
+  }
+
+  function calculateProgress() {
+    try {
+      const imgData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+      const data = imgData.data;
+      let transparentPixels = 0;
+      const step = 24; // Muestreo para alto rendimiento
+
+      for (let i = 3; i < data.length; i += step * 4) {
+        if (data[i] === 0) transparentPixels++;
+      }
+
+      const totalSampled = data.length / (step * 4);
+      const percent = Math.min(100, Math.round((transparentPixels / totalSampled) * 100));
+
+      if (percentText) percentText.textContent = `Raspado: ${percent}%`;
+      if (progressFill) progressFill.style.width = `${percent}%`;
+
+      if (percent >= 45 && !isCleared) {
+        isCleared = true;
+        canvas.style.transition = 'opacity 0.6s ease';
+        canvas.style.opacity = '0';
+        canvas.style.pointerEvents = 'none';
+
+        if (percentText) percentText.textContent = '¡PREMIO REVELADO! 🏆';
+        if (progressFill) progressFill.style.width = '100%';
+
+        playRomanticChime('fanfare');
+
+        // Lanzar lluvia de estrellas
+        const rect = canvas.getBoundingClientRect();
+        for (let i = 0; i < 16; i++) {
+          setTimeout(() => {
+            const rx = rect.left + Math.random() * rect.width;
+            const ry = rect.top + Math.random() * rect.height;
+            createBurstParticle(rx, ry);
+          }, i * 50);
+        }
+      }
+    } catch (err) {
+      // Ignorar restricciones CORS si las hubiera
+    }
+  }
+
+  // Eventos de ratón
+  canvas.addEventListener('mousedown', (e) => {
+    isDrawing = true;
+    scratch(e);
+  });
+  window.addEventListener('mouseup', () => (isDrawing = false));
+  canvas.addEventListener('mousemove', scratch);
+
+  // Eventos táctiles móviles
+  canvas.addEventListener('touchstart', (e) => {
+    isDrawing = true;
+    scratch(e);
+  }, { passive: true });
+  window.addEventListener('touchend', () => (isDrawing = false));
+  canvas.addEventListener('touchmove', scratch, { passive: true });
+
+  if (resetBtn) {
+    resetBtn.addEventListener('click', () => {
+      setupCanvas();
+      playRomanticChime('sparkle');
+    });
+  }
+}
+
+/* ==========================================================
+   FUNCIÓN 4: EL FRASCO MÁGICO DE PROMESAS Y VALES (OPCIÓN 1)
+   ========================================================== */
+function initPromisesJar() {
+  const jar = document.getElementById('magic-jar');
+  const drawBtn = document.getElementById('btn-draw-ticket');
+  const ticketCard = document.getElementById('active-ticket-card');
+  const ticketTitle = document.getElementById('ticket-title');
+  const ticketDesc = document.getElementById('ticket-desc');
+  const ticketIcon = document.getElementById('ticket-icon');
+  const ticketCategory = document.getElementById('ticket-category');
+  const counterText = document.getElementById('jar-counter-text');
+
+  if (!jar || !ticketCard) return;
+
+  const tickets = [
+    {
+      category: "VALE OFICIAL",
+      icon: "🍝",
+      title: "Cena Romántica Hecha por Mí",
+      desc: "Válido para una cena especial donde yo preparo todo lo que tú quieras, con velitas, tu bebida favorita y cero lavar platos."
+    },
+    {
+      category: "VALE OFICIAL",
+      icon: "💆‍♀️",
+      title: "Masaje Relajante Completo",
+      desc: "Válido por un masaje suave en la espalda, hombros y cuello con caricias y mimos sin límite de tiempo."
+    },
+    {
+      category: "PROMESA SAGRADA",
+      icon: "👂💖",
+      title: "Escucharte con el Corazón Abierto",
+      desc: "Promesa de dejar de lado cualquier orgullo, escucharte con empatía, validar cada uno de tus sentimientos y comprenderte siempre."
+    },
+    {
+      category: "VALE OFICIAL",
+      icon: "🍿",
+      title: "Maratón de Series o Películas",
+      desc: "Válido para ver la serie o película que tú elijas en la cama, comiendo chucherías, abrazaditos y sin quejarme de nada."
+    },
+    {
+      category: "VALE OFICIAL",
+      icon: "🫂",
+      title: "Abrazo Infinito Anti-Tristeza",
+      desc: "Válido para cuando te sientas cansada, triste o abrumada. Un abrazo apretado donde puedas soltarlo todo en mi pecho con seguridad."
+    },
+    {
+      category: "PROMESA SAGRADA",
+      icon: "🌙",
+      title: "Nunca Irnos a Dormir Enojados",
+      desc: "Prometo buscarte con amor, pedirte perdón cuando me equivoque y jamás dejar que termine la noche sin recordarte lo valiosa que eres."
+    },
+    {
+      category: "VALE OFICIAL",
+      icon: "🍦",
+      title: "Postre o Helado por Antojo",
+      desc: "Válido para salir o pedir tu helado o postre favorito en el momento exacto que se te antoje, sin excusas."
+    },
+    {
+      category: "VALE OFICIAL",
+      icon: "👑",
+      title: "Día de Consentirte al 100%",
+      desc: "Un día completo donde tú eres la jefa absoluta: pasear, comer rico, descansar y ser tratada como la reina del universo."
+    },
+    {
+      category: "PROMESA SAGRADA",
+      icon: "🌹",
+      title: "Cuidar Nuestra Relación con Hechos",
+      desc: "Prometo no solo decir palabras bonitas, sino demostrarte todos los días con acciones reales que mi prioridad eres tú."
+    },
+    {
+      category: "VALE COMODÍN",
+      icon: "⭐",
+      title: "Comodín Dorado de la Princesa Isabel",
+      desc: "¡Válido por absolutamente cualquier deseo que tengas en este instante! Charly no puede decir que no a nada."
+    }
+  ];
+
+  let currentIndex = 0;
+
+  function drawTicket() {
+    // Animación de sacudida del frasco
+    jar.classList.add('shaking');
+    setTimeout(() => jar.classList.remove('shaking'), 500);
+
+    const ticket = tickets[currentIndex];
+
+    // Animación del boleto
+    ticketCard.classList.remove('pop-out');
+    void ticketCard.offsetWidth; // trigger reflow
+    ticketCard.classList.add('pop-out');
+
+    if (ticketCategory) ticketCategory.textContent = ticket.category;
+    if (ticketIcon) ticketIcon.textContent = ticket.icon;
+    if (ticketTitle) ticketTitle.textContent = ticket.title;
+    if (ticketDesc) ticketDesc.textContent = ticket.desc;
+
+    currentIndex = (currentIndex + 1) % tickets.length;
+    if (counterText) {
+      counterText.textContent = `Vales leídos: ${currentIndex === 0 ? tickets.length : currentIndex} de ${tickets.length}`;
+    }
+
+    playRomanticChime('bell');
+
+    // Partículas
+    const rect = jar.getBoundingClientRect();
+    createBurstParticle(rect.left + rect.width / 2, rect.top + rect.height / 2);
+  }
+
+  jar.addEventListener('click', drawTicket);
+  if (drawBtn) drawBtn.addEventListener('click', drawTicket);
+}
+
+/* ==========================================================
+   FUNCIÓN 5: AMOR-ÓMETRO DE LA DOCTORA JUGUETES (OPCIÓN 3)
+   ========================================================== */
+function initLoveMeter() {
+  const measureBtn = document.getElementById('btn-measure-love');
+  const fill = document.getElementById('mercury-fill');
+  const readout = document.getElementById('meter-readout');
+  const status = document.getElementById('meter-status');
+  const rxCard = document.getElementById('doctor-rx-card');
+
+  if (!measureBtn || !fill) return;
+
+  let isMeasuring = false;
+
+  measureBtn.addEventListener('click', () => {
+    if (isMeasuring) return;
+    isMeasuring = true;
+
+    measureBtn.disabled = true;
+    measureBtn.style.opacity = '0.6';
+    if (rxCard) rxCard.hidden = true;
+    fill.classList.remove('overflowing');
+
+    const stages = [
+      { pct: 25, label: '25%', msg: '🩺 Iniciando chequeo... Detectando niveles de ternura...' },
+      { pct: 50, label: '50%', msg: '💓 Latidos de amor acelerándose rápidamente...' },
+      { pct: 75, label: '75%', msg: '💖 Nivel de enamoramiento sobrepasando la media...' },
+      { pct: 100, label: '100%', msg: '✨ ¡Llegando al límite máximo del termómetro!' },
+      { pct: 100, label: '1000%', msg: '🔥 ¡EXPLOSIÓN DE AMOR! ¡El amor por Isabel supera la escala científica!' }
+    ];
+
+    let currentStage = 0;
+
+    function step() {
+      if (currentStage < stages.length) {
+        const s = stages[currentStage];
+        fill.style.height = `${s.pct}%`;
+        if (readout) readout.textContent = s.label;
+        if (status) status.textContent = s.msg;
+
+        playRomanticChime(currentStage === stages.length - 1 ? 'fanfare' : 'sparkle');
+
+        currentStage++;
+        setTimeout(step, currentStage === stages.length ? 700 : 500);
+      } else {
+        // Alerta y receta
+        fill.classList.add('overflowing');
+        if (rxCard) rxCard.hidden = false;
+
+        measureBtn.disabled = false;
+        measureBtn.style.opacity = '1';
+        measureBtn.innerHTML = '<span>🩺 ¡Repetir Chequeo Médico!</span>';
+        isMeasuring = false;
+
+        // Lluvia de corazones
+        for (let i = 0; i < 15; i++) {
+          setTimeout(() => {
+            const rx = window.innerWidth * 0.5 + (Math.random() - 0.5) * 300;
+            const ry = window.innerHeight * 0.5 + (Math.random() - 0.5) * 200;
+            createBurstParticle(rx, ry);
+          }, i * 70);
+        }
+      }
+    }
+
+    step();
+  });
+}
+
+/* ==========================================================
+   FUNCIÓN 6: SOBRE CON SELLO DE CERA & PREGUNTA ¿ME PERDONAS?
+   ========================================================== */
+function initWaxSealEnvelope() {
+  const sealBtn = document.getElementById('wax-seal-btn');
+  const envelope = document.getElementById('vintage-envelope');
+  const letterCard = document.getElementById('unfolded-letter-card');
+  const yesBtn = document.getElementById('btn-forgive-yes');
+  const noBtn = document.getElementById('btn-forgive-no');
+  const celebration = document.getElementById('forgiveness-celebration');
+
+  // Abrir sobre al tocar el sello de cera
+  if (sealBtn && envelope) {
+    sealBtn.addEventListener('click', () => {
+      envelope.classList.add('unfolding');
+      playRomanticChime('fanfare');
+
+      const rect = sealBtn.getBoundingClientRect();
+      for (let i = 0; i < 10; i++) {
+        createBurstParticle(rect.left + rect.width / 2, rect.top + rect.height / 2);
+      }
+
+      setTimeout(() => {
+        envelope.classList.add('opened');
+        if (letterCard) {
+          letterCard.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      }, 500);
+    });
+  }
+
+  // Botón "¡Sí, te perdono!"
+  if (yesBtn && celebration) {
+    yesBtn.addEventListener('click', () => {
+      celebration.hidden = false;
+      yesBtn.style.display = 'none';
+      if (noBtn) noBtn.style.display = 'none';
+
+      playRomanticChime('fanfare');
+
+      // Gran estallido de confeti
+      for (let i = 0; i < 25; i++) {
+        setTimeout(() => {
+          const rx = window.innerWidth * 0.5 + (Math.random() - 0.5) * 350;
+          const ry = window.innerHeight * 0.5 + (Math.random() - 0.5) * 250;
+          createBurstParticle(rx, ry);
+        }, i * 50);
+      }
+    });
+  }
+
+  // Botón travieso "Déjame pensarlo..." que se escapa
+  if (noBtn) {
+    const funnyTexts = [
+      "¿Segura? 🥺",
+      "¡Piénsalo otra vez! ❤️",
+      "¡No se vale huir! 🥰",
+      "¡Mira qué rico te cocino! 🍳",
+      "¡Te daré mil besitos! 😘",
+      "¡Di que sí, mi princesa! 👉👈"
+    ];
+    let textIdx = 0;
+
+    function dodgeNoButton() {
+      const offsetX = (Math.random() - 0.5) * 160;
+      const offsetY = (Math.random() - 0.5) * 60;
+      noBtn.style.transform = `translate(${offsetX}px, ${offsetY}px)`;
+      noBtn.textContent = funnyTexts[textIdx];
+      textIdx = (textIdx + 1) % funnyTexts.length;
+      playRomanticChime('sparkle');
+    }
+
+    noBtn.addEventListener('mouseenter', dodgeNoButton);
+    noBtn.addEventListener('touchstart', (e) => {
+      e.preventDefault();
+      dodgeNoButton();
+    }, { passive: false });
+    noBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      dodgeNoButton();
+    });
+  }
+}
+
+/* ==========================================================
+   FUNCIÓN 7: RASTRO DE POLVO DE HADAS (SPARKLES AL MOVER)
+   ========================================================== */
+function initFairyDustTrail() {
+  let lastX = 0;
+  let lastY = 0;
+  let lastTime = 0;
+
+  function spawnSparkle(x, y) {
+    const now = Date.now();
+    if (now - lastTime < 65) return; // Limitar frecuencia para fluidez 60fps
+    const dist = Math.hypot(x - lastX, y - lastY);
+    if (dist < 22) return;
+
+    lastX = x;
+    lastY = y;
+    lastTime = now;
+
+    const sparkle = document.createElement('span');
+    sparkle.className = 'fairy-dust-sparkle';
+    const icons = ['✨', '✦', '⭐', '🌸', '💫'];
+    sparkle.textContent = icons[Math.floor(Math.random() * icons.length)];
+    sparkle.style.left = `${x}px`;
+    sparkle.style.top = `${y}px`;
+    sparkle.style.color = Math.random() > 0.5 ? '#ffd166' : '#ff96c0';
+    document.body.appendChild(sparkle);
+
+    setTimeout(() => {
+      if (sparkle.parentNode) sparkle.remove();
+    }, 750);
+  }
+
+  window.addEventListener('pointermove', (e) => spawnSparkle(e.clientX, e.clientY), { passive: true });
+  window.addEventListener('touchmove', (e) => {
+    if (e.touches && e.touches[0]) {
+      spawnSparkle(e.touches[0].clientX, e.touches[0].clientY);
+    }
+  }, { passive: true });
+}
+
+/* ==========================================================
+   FUNCIÓN 8: REPRODUCTOR DE NOTA DE VOZ PERSONAL DE CHARLY
+   ========================================================== */
+function initPersonalVoiceNote() {
+  const voiceAudio = document.getElementById('personal-voice-audio');
+  const playBtn = document.getElementById('voice-play-btn');
+  const playIcon = document.getElementById('voice-play-icon');
+  const durationLabel = document.getElementById('voice-duration-text');
+  const statusHint = document.getElementById('voice-status-hint');
+  const waveContainer = document.getElementById('voice-wave-container');
+  const progressFill = document.getElementById('voice-progress-fill');
+  const waveBarsContainer = document.getElementById('voice-wave-bars');
+  const widget = document.querySelector('.voice-player-widget');
+  const bgAudio = document.getElementById('site-audio');
+
+  if (!voiceAudio || !playBtn) return;
+
+  const waveBars = waveBarsContainer ? waveBarsContainer.querySelectorAll('span') : [];
+  let isPlayingVoice = false;
+  const knownTotalDuration = 79.24; // 1:19 min
+
+  function formatTime(seconds) {
+    if (isNaN(seconds) || seconds < 0) return '0:00';
+    const m = Math.floor(seconds / 60);
+    const s = Math.floor(seconds % 60);
+    return `${m}:${s < 10 ? '0' : ''}${s}`;
+  }
+
+  function getAudioDuration() {
+    return (voiceAudio.duration && !isNaN(voiceAudio.duration) && isFinite(voiceAudio.duration) && voiceAudio.duration > 0)
+      ? voiceAudio.duration
+      : knownTotalDuration;
+  }
+
+  function updateDisplayTime() {
+    const dur = getAudioDuration();
+    const curr = voiceAudio.currentTime || 0;
+    if (durationLabel) {
+      durationLabel.textContent = `${formatTime(curr)} / ${formatTime(dur)}`;
+    }
+
+    const progress = Math.min(1, Math.max(0, curr / dur));
+    if (progressFill) {
+      progressFill.style.width = `${progress * 100}%`;
+    }
+
+    // Actualizar barras de onda de voz activas
+    if (waveBars.length > 0) {
+      const activeCount = Math.floor(progress * waveBars.length);
+      waveBars.forEach((bar, idx) => {
+        if (idx <= activeCount) {
+          bar.classList.add('active');
+        } else {
+          bar.classList.remove('active');
+        }
+      });
+    }
+  }
+
+  voiceAudio.addEventListener('loadedmetadata', updateDisplayTime);
+  voiceAudio.addEventListener('timeupdate', updateDisplayTime);
+
+  // Inicializar etiqueta
+  updateDisplayTime();
+
+  // Control de volumen de música de fondo (Audio Ducking)
+  function duckBackgroundMusic(duck) {
+    if (!bgAudio) return;
+    const targetVolume = duck ? 0.15 : 0.85;
+    const step = duck ? -0.05 : 0.05;
+
+    const fade = setInterval(() => {
+      if ((duck && bgAudio.volume > targetVolume) || (!duck && bgAudio.volume < targetVolume)) {
+        bgAudio.volume = Math.max(0, Math.min(1, bgAudio.volume + step));
+      } else {
+        bgAudio.volume = targetVolume;
+        clearInterval(fade);
+      }
+    }, 40);
+  }
+
+  async function togglePlayVoice() {
+    if (voiceAudio.paused) {
+      try {
+        await voiceAudio.play();
+        isPlayingVoice = true;
+        playBtn.classList.add('playing');
+        if (playIcon) playIcon.textContent = '⏸';
+        if (widget) widget.classList.add('is-playing');
+        if (statusHint) statusHint.textContent = 'Escuchando la voz de Charly... 🎙️💖';
+
+        // Bajar volumen de la música de fondo para que resalte la voz
+        duckBackgroundMusic(true);
+
+        // Destello de corazones
+        const rect = playBtn.getBoundingClientRect();
+        createBurstParticle(rect.left + rect.width / 2, rect.top + rect.height / 2);
+      } catch (err) {
+        console.warn('Voice play blocked:', err);
+      }
+    } else {
+      voiceAudio.pause();
+      isPlayingVoice = false;
+      playBtn.classList.remove('playing');
+      if (playIcon) playIcon.textContent = '▶';
+      if (widget) widget.classList.remove('is-playing');
+      if (statusHint) statusHint.textContent = 'Pausado • Toca ▶ para reanudar';
+
+      // Restaurar volumen de música de fondo
+      duckBackgroundMusic(false);
+    }
+  }
+
+  playBtn.addEventListener('click', togglePlayVoice);
+
+  voiceAudio.addEventListener('ended', () => {
+    isPlayingVoice = false;
+    playBtn.classList.remove('playing');
+    if (playIcon) playIcon.textContent = '▶';
+    if (widget) widget.classList.remove('is-playing');
+    if (statusHint) statusHint.textContent = 'Audio finalizado ♡ Con todo mi amor para ti';
+    duckBackgroundMusic(false);
+    playRomanticChime('fanfare');
+  });
+
+  // Tocar en cualquier parte de la onda de audio para adelantar o retroceder
+  if (waveContainer) {
+    waveContainer.addEventListener('click', (e) => {
+      const rect = waveContainer.getBoundingClientRect();
+      const clickX = e.clientX - rect.left;
+      const ratio = Math.max(0, Math.min(1, clickX / rect.width));
+      const dur = getAudioDuration();
+      voiceAudio.currentTime = ratio * dur;
+      updateDisplayTime();
+    });
+  }
+}
+
+
