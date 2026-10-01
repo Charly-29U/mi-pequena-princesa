@@ -149,7 +149,7 @@ function initQRModal() {
 }
 
 /* ==========================================================
-   1. CANVAS DE PÉTALOS DE ROSA Y LUCIÉRNAGAS (RAY STYLE)
+   1. CANVAS DE CIELO ESTRELLADO, PÉTALOS Y LUCIÉRNAGAS (RAY & EVANGELINE)
    ========================================================== */
 function initAmbientCanvas() {
   const canvas = document.getElementById('ambient-canvas');
@@ -162,45 +162,126 @@ function initAmbientCanvas() {
   window.addEventListener('resize', () => {
     width = canvas.width = window.innerWidth;
     height = canvas.height = window.innerHeight;
+    initStars();
   });
 
-  // Crear pétalos
-  const petals = [];
-  const petalCount = window.innerWidth < 768 ? 16 : 28;
-  for (let i = 0; i < petalCount; i++) {
-    petals.push({
-      x: Math.random() * width,
-      y: Math.random() * height,
-      size: Math.random() * 8 + 6,
-      speedX: (Math.random() - 0.5) * 1.2,
-      speedY: Math.random() * 1.2 + 0.6,
-      rotation: Math.random() * 360,
-      rotSpeed: (Math.random() - 0.5) * 1.5,
-      color: Math.random() > 0.4 ? 'rgba(230, 57, 86, 0.45)' : 'rgba(255, 179, 193, 0.55)'
-    });
-  }
+  // 1. ESTRELLAS DEL CIELO NOCTURNO (ESTRELLAS TITILANTES Y DIAMANTES ✦)
+  const isClassicPage = document.body.classList.contains('rose-classic-page');
+  const starCount = isClassicPage ? 110 : (window.innerWidth < 768 ? 40 : 75);
+  let stars = [];
 
-  // Crear luciérnagas (Ray)
+  function initStars() {
+    stars = [];
+    for (let i = 0; i < starCount; i++) {
+      const isCross = Math.random() < 0.18; // 18% son estrellas con destello de 4 puntas ✦
+      stars.push({
+        x: Math.random() * width,
+        y: Math.random() * height,
+        radius: isCross ? (Math.random() * 2 + 1.8) : (Math.random() * 1.5 + 0.6),
+        baseAlpha: Math.random() * 0.5 + 0.35,
+        twinkleSpeed: Math.random() * 0.035 + 0.015,
+        phase: Math.random() * Math.PI * 2,
+        isCross: isCross,
+        color: Math.random() > 0.3 ? '255, 255, 255' : (Math.random() > 0.5 ? '255, 234, 167' : '255, 204, 213')
+      });
+    }
+  }
+  initStars();
+
+  // 2. LUCIÉRNAGAS DE RAY (CÁLIDAS Y BRILLANTES)
+  const fireflyCount = isClassicPage ? (window.innerWidth < 768 ? 24 : 38) : (window.innerWidth < 768 ? 14 : 24);
   const fireflies = [];
-  const fireflyCount = window.innerWidth < 768 ? 12 : 22;
   for (let i = 0; i < fireflyCount; i++) {
     fireflies.push({
       x: Math.random() * width,
       y: Math.random() * height,
-      radius: Math.random() * 2.5 + 1.5,
+      radius: Math.random() * 2.8 + 1.6,
       angle: Math.random() * Math.PI * 2,
-      speed: Math.random() * 0.02 + 0.01,
-      vx: (Math.random() - 0.5) * 0.8,
-      vy: (Math.random() - 0.5) * 0.8,
-      alpha: Math.random() * 0.8 + 0.2
+      speed: Math.random() * 0.03 + 0.015,
+      vx: (Math.random() - 0.5) * 0.9,
+      vy: (Math.random() - 0.5) * 0.9,
+      pulse: Math.random() * Math.PI * 2,
+      pulseSpeed: Math.random() * 0.04 + 0.02
     });
   }
+
+  // 3. PÉTALOS DE ROSA FLOTANTES
+  const petalCount = window.innerWidth < 768 ? 14 : 26;
+  const petals = [];
+  for (let i = 0; i < petalCount; i++) {
+    petals.push({
+      x: Math.random() * width,
+      y: Math.random() * height,
+      size: Math.random() * 7 + 5,
+      speedX: (Math.random() - 0.5) * 1.0,
+      speedY: Math.random() * 1.0 + 0.5,
+      rotation: Math.random() * 360,
+      rotSpeed: (Math.random() - 0.5) * 1.3,
+      color: Math.random() > 0.4 ? 'rgba(230, 57, 86, 0.45)' : 'rgba(255, 179, 193, 0.55)'
+    });
+  }
+
+  // Interacción suave con ratón o toque
+  let pointerX = -9999;
+  let pointerY = -9999;
+  window.addEventListener('pointermove', (e) => {
+    pointerX = e.clientX;
+    pointerY = e.clientY;
+  }, { passive: true });
 
   function render() {
     ctx.clearRect(0, 0, width, height);
 
-    // Dibujar y actualizar pétalos
-    petals.forEach(p => {
+    // DIBUJAR ESTRELLAS
+    for (let i = 0; i < stars.length; i++) {
+      const s = stars[i];
+      s.phase += s.twinkleSpeed;
+      const alpha = Math.max(0.1, s.baseAlpha + Math.sin(s.phase) * 0.45);
+
+      if (s.isCross) {
+        // Estrella diamante con 4 puntas relucientes (✦)
+        ctx.save();
+        ctx.translate(s.x, s.y);
+        ctx.fillStyle = `rgba(${s.color}, ${alpha})`;
+
+        const rayLen = s.radius * 3.5;
+        ctx.beginPath();
+        // Rayo vertical
+        ctx.moveTo(0, -rayLen);
+        ctx.lineTo(s.radius * 0.35, 0);
+        ctx.lineTo(0, rayLen);
+        ctx.lineTo(-s.radius * 0.35, 0);
+        ctx.closePath();
+        ctx.fill();
+
+        // Rayo horizontal
+        ctx.beginPath();
+        ctx.moveTo(-rayLen, 0);
+        ctx.lineTo(0, s.radius * 0.35);
+        ctx.lineTo(rayLen, 0);
+        ctx.lineTo(0, -s.radius * 0.35);
+        ctx.closePath();
+        ctx.fill();
+
+        // Núcleo brillante
+        ctx.beginPath();
+        ctx.arc(0, 0, s.radius * 0.8, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(255, 255, 255, ${Math.min(1, alpha + 0.3)})`;
+        ctx.fill();
+
+        ctx.restore();
+      } else {
+        // Estrella circular suave
+        ctx.beginPath();
+        ctx.arc(s.x, s.y, s.radius, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(${s.color}, ${alpha})`;
+        ctx.fill();
+      }
+    }
+
+    // DIBUJAR PÉTALOS
+    for (let i = 0; i < petals.length; i++) {
+      const p = petals[i];
       ctx.save();
       ctx.translate(p.x, p.y);
       ctx.rotate((p.rotation * Math.PI) / 180);
@@ -220,37 +301,52 @@ function initAmbientCanvas() {
       }
       if (p.x > width + 20) p.x = -20;
       if (p.x < -20) p.x = width + 20;
-    });
+    }
 
-    // Dibujar y actualizar luciérnagas
-    fireflies.forEach(f => {
+    // DIBUJAR LUCIÉRNAGAS
+    for (let i = 0; i < fireflies.length; i++) {
+      const f = fireflies[i];
+      f.pulse += f.pulseSpeed;
+      const alpha = Math.max(0.15, Math.abs(Math.sin(f.pulse)));
+
+      // Movimiento ondulante natural
       f.angle += f.speed;
-      f.alpha = Math.abs(Math.sin(f.angle));
-      f.x += f.vx;
-      f.y += f.vy;
+      f.x += f.vx + Math.cos(f.angle) * 0.5;
+      f.y += f.vy + Math.sin(f.angle) * 0.5;
 
-      if (f.x < 0) f.x = width;
-      if (f.x > width) f.x = 0;
-      if (f.y < 0) f.y = height;
-      if (f.y > height) f.y = 0;
+      // Suave reacción con cursor o toque
+      const dx = pointerX - f.x;
+      const dy = pointerY - f.y;
+      const dist = Math.hypot(dx, dy);
+      if (dist < 120 && dist > 10) {
+        f.x -= (dx / dist) * 0.8;
+        f.y -= (dy / dist) * 0.8;
+      }
 
-      // Resplandor cálido
-      const gradient = ctx.createRadialGradient(f.x, f.y, 0, f.x, f.y, f.radius * 4);
-      gradient.addColorStop(0, `rgba(255, 235, 120, ${f.alpha})`);
-      gradient.addColorStop(0.5, `rgba(255, 183, 3, ${f.alpha * 0.4})`);
+      if (f.x < -20) f.x = width + 20;
+      if (f.x > width + 20) f.x = -20;
+      if (f.y < -20) f.y = height + 20;
+      if (f.y > height + 20) f.y = -20;
+
+      // 1. Resplandor exterior cálido de luciérnaga
+      const glowRadius = f.radius * 5.5;
+      const gradient = ctx.createRadialGradient(f.x, f.y, 0, f.x, f.y, glowRadius);
+      gradient.addColorStop(0, `rgba(255, 235, 120, ${alpha * 0.9})`);
+      gradient.addColorStop(0.35, `rgba(255, 183, 3, ${alpha * 0.45})`);
+      gradient.addColorStop(0.7, `rgba(255, 140, 0, ${alpha * 0.15})`);
       gradient.addColorStop(1, 'rgba(255, 183, 3, 0)');
 
       ctx.fillStyle = gradient;
       ctx.beginPath();
-      ctx.arc(f.x, f.y, f.radius * 4, 0, Math.PI * 2);
+      ctx.arc(f.x, f.y, glowRadius, 0, Math.PI * 2);
       ctx.fill();
 
-      // Centro brillante
-      ctx.fillStyle = `rgba(255, 255, 255, ${f.alpha})`;
+      // 2. Núcleo incandescente de la luciérnaga
+      ctx.fillStyle = `rgba(255, 255, 255, ${Math.min(1, alpha + 0.2)})`;
       ctx.beginPath();
-      ctx.arc(f.x, f.y, f.radius * 0.8, 0, Math.PI * 2);
+      ctx.arc(f.x, f.y, f.radius * 0.9, 0, Math.PI * 2);
       ctx.fill();
-    });
+    }
 
     requestAnimationFrame(render);
   }
@@ -767,21 +863,22 @@ function initFallingLoveWords() {
     const text = document.createElement("div");
     text.className = "falling-text";
     text.innerText = loveWords[Math.floor(Math.random() * loveWords.length)];
-    text.style.left = Math.random() * 95 + "vw";
-    text.style.animationDuration = (3 + Math.random() * 5) + "s";
-    text.style.fontSize = (14 + Math.random() * 8) + "px";
+    text.style.left = (Math.random() * 90 + 5) + "vw";
+    text.style.animationDuration = (8 + Math.random() * 6) + "s";
+    text.style.fontSize = (13 + Math.random() * 6) + "px";
+    text.style.opacity = (Math.random() * 0.35 + 0.45).toFixed(2);
     document.body.appendChild(text);
     setTimeout(() => {
       if (text.parentNode) text.remove();
-    }, 8500);
+    }, 15000);
   }
 
-  // Generar varias al inicio
-  for (let i = 0; i < 6; i++) {
-    setTimeout(createFallingText, i * 150);
-  }
+  // Generar un par de palabras al inicio de forma suave
+  setTimeout(createFallingText, 300);
+  setTimeout(createFallingText, 1200);
 
-  setInterval(createFallingText, 300);
+  // Intervalo calmado y romántico (cada 1.6 segundos en vez de cada 0.3s)
+  setInterval(createFallingText, 1600);
 }
 
 /* ==========================================================

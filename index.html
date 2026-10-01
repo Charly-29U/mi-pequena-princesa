@@ -14,6 +14,62 @@
   <script src="script.js" defer></script>
 </head>
 <body class="rose-classic-page">
+  <!-- Fondo dinámico con cielo estrellado y luciérnagas de Ray -->
+  <canvas id="ambient-canvas" class="ambient-canvas" aria-hidden="true"></canvas>
+
+
+
+  <!-- ESCENA 2: CORAZÓN FLECHADO CON I+J (TOTALMENTE TRANSPARENTE EN EL CIELO) -->
+  <aside class="bayou-tree-trunk-scene" aria-label="Corazón flechado de amor I+J">
+    <div class="bark-wood-texture">
+      <!-- Gráfico del Corazón Flechado Tallado en Luz de Fuego/Luciérnaga -->
+      <svg class="carved-heart-graphic" viewBox="0 0 250 250" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <!-- Resplandor de corteza incandescente -->
+          <filter id="carved-ember-glow" x="-40%" y="-40%" width="180%" height="180%">
+            <feGaussianBlur in="SourceGraphic" stdDeviation="2" result="core" />
+            <feGaussianBlur in="SourceGraphic" stdDeviation="5" result="glow1" />
+            <feGaussianBlur in="SourceGraphic" stdDeviation="12" result="glow2" />
+            <feMerge>
+              <feMergeNode in="glow2" />
+              <feMergeNode in="glow1" />
+              <feMergeNode in="core" />
+              <feMergeNode in="SourceGraphic" />
+            </feMerge>
+          </filter>
+        </defs>
+
+        <g filter="url(#carved-ember-glow)">
+          <!-- Trazo exterior del Corazón Tallado a mano -->
+          <path class="carved-heart-stroke" d="M120,188 C72,160 38,124 44,76 C48,44 76,32 104,42 C113,45 117,50 120,56 C123,50 127,45 136,42 C164,32 192,44 196,76 C202,124 168,160 120,188 Z" />
+
+          <!-- Flecha de Cupido: Punta arriba a la izquierda (↖), Plumas abajo a la derecha (↘) -->
+          <!-- Punta de la flecha en la parte superior izquierda -->
+          <path class="arrow-carved-tip" d="M24,56 L44,58 L36,76 Z" />
+          <!-- Vástago de la flecha cruzando el corazón -->
+          <path class="arrow-carved-shaft" d="M38,66 L208,172" />
+          <!-- Plumas de la flecha en la parte inferior derecha -->
+          <path class="arrow-carved-feathers" d="M192,154 L216,172 M198,164 L222,182 M186,164 L210,182" />
+
+          <!-- Letras I+J talladas exactamente como en la película (abajo a la derecha) -->
+          <!-- Letra I -->
+          <path class="carved-letter-line" d="M146,200 L166,200 M156,200 L156,230 M146,230 L166,230" />
+          <!-- Signo + -->
+          <path class="carved-plus-line" d="M174,215 L188,215 M181,208 L181,222" />
+          <!-- Letra J -->
+          <path class="carved-letter-line" d="M196,202 L216,202 M210,202 L210,224 C210,234 198,236 192,228" />
+        </g>
+      </svg>
+
+      <!-- Chispas que se desprenden del grabado -->
+      <div class="carved-firefly-sparks">
+        <span class="spark sp1">✨</span>
+        <span class="spark sp2">✦</span>
+        <span class="spark sp3">⭐</span>
+      </div>
+    </div>
+  </aside>
+
   <!-- Botón flotante para la música de fondo -->
   <div class="music-floating-toggle">
     <button class="dark-music-btn" type="button" data-music-toggle aria-label="Reproducir nuestra canción" title="Reproducir música romántica">

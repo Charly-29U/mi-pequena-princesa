@@ -68,7 +68,8 @@ body.rose-classic-page {
   overflow: hidden;
   font-family: var(--font-sans);
   height: 100vh;
-  width: 100vw;
+  height: 100dvh;
+  width: 100%;
   margin: 0;
   padding: 0;
   position: relative;
@@ -100,8 +101,9 @@ body.rose-classic-page {
 }
 
 .rose-screen-wrap {
-  width: 100vw;
+  width: 100%;
   height: 100vh;
+  height: 100dvh;
   position: relative;
   display: flex;
   flex-direction: column;
@@ -109,8 +111,13 @@ body.rose-classic-page {
   align-items: center;
   box-sizing: border-box;
   z-index: 10;
-  padding: 18px 16px;
+  padding: clamp(10px, 1.8vh, 22px) clamp(12px, 3vw, 28px);
+  padding-top: max(clamp(10px, 1.8vh, 22px), env(safe-area-inset-top));
+  padding-bottom: max(clamp(10px, 1.8vh, 22px), env(safe-area-inset-bottom));
+  padding-left: max(clamp(12px, 3vw, 28px), env(safe-area-inset-left));
+  padding-right: max(clamp(12px, 3vw, 28px), env(safe-area-inset-right));
   pointer-events: none;
+  overflow: hidden;
 }
 
 .rose-screen-wrap * {
@@ -120,34 +127,37 @@ body.rose-classic-page {
 /* Encabezado */
 .rose-header {
   text-align: center;
-  margin-top: 1.5%;
+  margin-top: clamp(4px, 1.2vh, 18px);
   z-index: 20;
+  max-width: min(720px, 94vw);
+  position: relative;
+  pointer-events: auto;
 }
 
 .rose-header h2 {
   margin-top: 0;
-  color: green;
-  font-size: clamp(22px, 3.2vw, 36px);
+  color: #00d26a;
+  font-size: clamp(17px, 2.6vw, 32px);
   text-align: center;
   z-index: 2;
   position: relative;
   font-weight: 700;
   letter-spacing: 0.5px;
-  text-shadow: 0 0 10px rgba(0, 200, 100, 0.4);
+  text-shadow: 0 0 10px rgba(0, 210, 106, 0.45);
 }
 
 .apology-title {
   font-family: var(--font-serif);
-  font-size: clamp(20px, 2.8vw, 36px);
+  font-size: clamp(16px, 2.3vw, 32px);
   color: #ffffff;
   line-height: 1.25;
-  margin: 4px 0 6px;
+  margin: 3px 0 5px;
   font-weight: 500;
 }
 
 .apology-accent {
   font-family: var(--font-script);
-  font-size: clamp(30px, 3.8vw, 50px);
+  font-size: clamp(24px, 3.6vw, 48px);
   color: #ff6584;
   font-weight: 400;
   display: inline-block;
@@ -156,7 +166,7 @@ body.rose-classic-page {
 
 .touch-hint-line {
   font-family: var(--font-hand);
-  font-size: 17px;
+  font-size: clamp(12.5px, 1.5vw, 16px);
   color: #f594b8;
   margin: 0;
   letter-spacing: 0.5px;
@@ -472,8 +482,8 @@ body.rose-classic-page {
 /* Botón flotante de música en index.html */
 .music-floating-toggle {
   position: fixed;
-  top: 18px;
-  right: 20px;
+  top: max(clamp(12px, 2.2vh, 26px), env(safe-area-inset-top));
+  right: max(clamp(12px, 2.2vw, 28px), env(safe-area-inset-right));
   z-index: 100;
 }
 
@@ -535,11 +545,11 @@ body.rose-classic-page {
 
 @media (max-height: 650px) {
   .container {
-    transform: scale(0.65);
+    transform: scale(0.48);
   }
-  .couple-title { font-size: 20px; }
-  .apology-title { font-size: 20px; }
-  .apology-accent { font-size: 28px; }
+  .couple-title { font-size: 18px; }
+  .apology-title { font-size: 17px; }
+  .apology-accent { font-size: 24px; }
 }
 
 /* Canvas de fondo con pétalos y luciérnagas */
@@ -601,6 +611,25 @@ body.rose-classic-page {
 @keyframes sparkleTwinkle {
   0%, 100% { opacity: 0.7; transform: scale(0.9); }
   50% { opacity: 1; transform: scale(1.2); }
+}
+
+.evangeline-star.evangeline-star-index {
+  top: 18px;
+  left: 22px;
+  right: auto;
+  z-index: 25;
+}
+
+.evangeline-star-index .star-caption {
+  color: #ffea79;
+  background: rgba(18, 33, 57, 0.75);
+  border-color: rgba(255, 234, 120, 0.4);
+  text-shadow: 0 0 6px rgba(255, 234, 120, 0.5);
+}
+
+body.rose-classic-page .ambient-canvas {
+  z-index: 0;
+  opacity: 1;
 }
 
 /* ==========================================================
@@ -2555,8 +2584,35 @@ body.rose-classic-page {
   .topbar {
     flex-direction: column;
     gap: 12px;
-    padding: 12px 16px;
+    padding: 12px 14px;
     border-radius: 24px;
+    width: calc(100% - 24px);
+  }
+
+  .topbar-actions {
+    flex-wrap: wrap;
+    justify-content: center;
+    width: 100%;
+    gap: 8px;
+  }
+
+  .music-player-bar {
+    max-width: 100%;
+  }
+
+  .music-button {
+    max-width: 100%;
+  }
+
+  .music-info {
+    max-width: calc(100vw - 160px);
+    overflow: hidden;
+  }
+
+  .music-title-text {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
 
   .main-title {
@@ -2616,7 +2672,7 @@ body.rose-classic-page {
 
 .photos-album-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(min(260px, 100%), 1fr));
   gap: 28px;
   justify-content: center;
   align-items: stretch;
@@ -2792,16 +2848,62 @@ body.bayou-night-mode p {
   color: #cbd5e1 !important;
 }
 
+/* 1. SECCIÓN DE POEMA EN MODO NOCHE (SOLUCIÓN CONTRASTE TOTAL) */
+body.bayou-night-mode .poem-section {
+  background: linear-gradient(135deg, #09111e 0%, #131d33 50%, #0b1322 100%) !important;
+  border-block: 1px solid rgba(255, 215, 0, 0.25) !important;
+  box-shadow: inset 0 0 60px rgba(0, 0, 0, 0.7);
+}
+
+body.bayou-night-mode .poem-inner .eyebrow {
+  color: #ffd166 !important;
+  letter-spacing: 2px;
+}
+
+body.bayou-night-mode .poem-inner h2 {
+  color: #ffffff !important;
+  text-shadow: 0 0 16px rgba(255, 209, 102, 0.35);
+}
+
+body.bayou-night-mode .poem-inner blockquote {
+  color: #e2e8f0 !important;
+}
+
+body.bayou-night-mode .poem-inner blockquote p {
+  color: #f1f5f9 !important;
+  text-shadow: 0 0 12px rgba(0, 0, 0, 0.8);
+}
+
+body.bayou-night-mode .poem-signature {
+  color: #6ee7b7 !important;
+  text-shadow: 0 0 10px rgba(110, 231, 183, 0.4);
+}
+
+/* 2. TARJETAS Y CONTENEDORES EN MODO NOCHE */
 body.bayou-night-mode .polaroid-card,
 body.bayou-night-mode .sunflower-card-box,
 body.bayou-night-mode .scratch-card-wrapper,
 body.bayou-night-mode .promises-jar-card,
 body.bayou-night-mode .first-aid-card,
 body.bayou-night-mode .cinema-player-card,
-body.bayou-night-mode .unfolded-letter-card {
+body.bayou-night-mode .unfolded-letter-card,
+body.bayou-night-mode .letter-card-container {
   background: #141c2e !important;
   border-color: rgba(255, 215, 0, 0.2) !important;
   box-shadow: 0 12px 35px rgba(0, 0, 0, 0.4) !important;
+}
+
+/* Polaroids */
+body.bayou-night-mode .album-section-title {
+  color: #ffffff !important;
+}
+
+body.bayou-night-mode .album-section-sub {
+  color: #cbd5e1 !important;
+}
+
+body.bayou-night-mode .polaroid-num-badge {
+  color: #ffd166 !important;
 }
 
 body.bayou-night-mode .polaroid-title,
@@ -2813,12 +2915,274 @@ body.bayou-night-mode .ticket-title {
 body.bayou-night-mode .polaroid-desc,
 body.bayou-night-mode .bandage-msg,
 body.bayou-night-mode .ticket-desc {
+  color: #cbd5e1 !important;
+}
+
+body.bayou-night-mode .polaroid-caption {
+  color: #f1f5f9 !important;
+}
+
+body.bayou-night-mode .polaroid-date {
+  color: #ffd166 !important;
+}
+
+body.bayou-night-mode .zoom-hint {
+  color: #fda4af !important;
+}
+
+/* Personajes */
+body.bayou-night-mode .char-card,
+body.bayou-night-mode .doc-box,
+body.bayou-night-mode .bayou-box,
+body.bayou-night-mode .beauty-box {
+  background: #141c2e !important;
+  border-color: rgba(255, 215, 0, 0.25) !important;
+}
+
+body.bayou-night-mode .doc-card-body h3,
+body.bayou-night-mode .beauty-card-body h3 {
+  color: #ffd166 !important;
+}
+
+body.bayou-night-mode .doc-card-body p,
+body.bayou-night-mode .beauty-card-body p {
+  color: #cbd5e1 !important;
+}
+
+/* Botiquín Doctora Juguetes */
+body.bayou-night-mode .first-aid-header h2 {
+  color: #ffffff !important;
+}
+
+body.bayou-night-mode .first-aid-header p {
+  color: #cbd5e1 !important;
+}
+
+body.bayou-night-mode .bandage-btn {
+  background: linear-gradient(135deg, #182238 0%, #121a2c 100%) !important;
+  border-color: rgba(255, 215, 0, 0.25) !important;
+}
+
+body.bayou-night-mode .bandage-btn:hover {
+  background: linear-gradient(135deg, #202d4a 0%, #162035 100%) !important;
+  border-color: #ffd166 !important;
+}
+
+/* Amor-ómetro de la Doctora Juguetes en Modo Noche */
+body.bayou-night-mode .love-meter-card {
+  background: #141c2e !important;
+  border-color: rgba(179, 136, 235, 0.4) !important;
+  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.5) !important;
+}
+
+body.bayou-night-mode .meter-header h3 {
+  color: #ffffff !important;
+  text-shadow: 0 0 12px rgba(255, 255, 255, 0.35);
+}
+
+body.bayou-night-mode .meter-header p {
+  color: #cbd5e1 !important;
+}
+
+body.bayou-night-mode .mercury-track {
+  background: rgba(15, 23, 42, 0.9) !important;
+  border-color: #a855f7 !important;
+}
+
+body.bayou-night-mode .thermometer-scale {
+  color: #c084fc !important;
+}
+
+body.bayou-night-mode .scale-overflow {
+  color: #ff3366 !important;
+  text-shadow: 0 0 8px rgba(255, 51, 102, 0.6);
+}
+
+body.bayou-night-mode .meter-readout-sub {
+  color: #c084fc !important;
+}
+
+body.bayou-night-mode .meter-status {
+  color: #e2e8f0 !important;
+}
+
+body.bayou-night-mode .doctor-rx-card {
+  background: #0f172a !important;
+  border-color: #a855f7 !important;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5) !important;
+}
+
+body.bayou-night-mode .rx-header {
+  border-bottom-color: rgba(168, 85, 247, 0.4) !important;
+  color: #e9d5ff !important;
+}
+
+body.bayou-night-mode .rx-body p {
+  color: #e2e8f0 !important;
+}
+
+body.bayou-night-mode .rx-body p strong {
+  color: #ffd166 !important;
+}
+
+/* Girasol Interactivo */
+body.bayou-night-mode .sunflower-phrase-bubble {
+  background: #141c2e !important;
+  border-color: rgba(254, 211, 48, 0.4) !important;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4) !important;
+}
+
+body.bayou-night-mode .sunflower-phrase-bubble .bubble-text {
+  color: #fef08a !important;
+}
+
+body.bayou-night-mode .sunflower-count-badge {
+  background: #1e293b !important;
+  color: #ffd166 !important;
+  border-color: #f59e0b !important;
+}
+
+/* Frasco de Promesas */
+body.bayou-night-mode .ticket-card {
+  background: #141c2e !important;
+  border-color: rgba(255, 215, 0, 0.3) !important;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5) !important;
+}
+
+body.bayou-night-mode .ticket-stamp {
+  border-color: #ffd166 !important;
+  color: #ffd166 !important;
+}
+
+body.bayou-night-mode .jar-label-tag {
+  background: #1e293b !important;
+  color: #ffd166 !important;
+  border-color: #f59e0b !important;
+}
+
+/* Raspa y Gana */
+body.bayou-night-mode .scratch-card-inner,
+body.bayou-night-mode .scratch-hidden-content {
+  background: #141c2e !important;
+  border-color: rgba(255, 215, 0, 0.4) !important;
+}
+
+body.bayou-night-mode .prize-trophy {
+  color: #ffd166 !important;
+}
+
+body.bayou-night-mode .scratch-prize-text h3 {
+  color: #ffffff !important;
+}
+
+body.bayou-night-mode .scratch-prize-text p {
+  color: #cbd5e1 !important;
+}
+
+body.bayou-night-mode .prize-tag {
+  color: #f472b6 !important;
+}
+
+/* Cine y Videos */
+body.bayou-night-mode .video-chip {
+  background: #141c2e !important;
+  color: #e2e8f0 !important;
+  border-color: rgba(255, 215, 0, 0.2) !important;
+}
+
+body.bayou-night-mode .video-chip:hover {
+  background: #1e293b !important;
+  border-color: #ffd166 !important;
+}
+
+body.bayou-night-mode .video-chip.active {
+  background: linear-gradient(135deg, #e63956 0%, #c9184a 100%) !important;
+  color: #ffffff !important;
+}
+
+/* Carta de Amor y Zona de Perdón */
+body.bayou-night-mode .letter-emphasis {
+  color: #ff758f !important;
+  text-shadow: 0 0 12px rgba(255, 117, 143, 0.4);
+}
+
+body.bayou-night-mode .forgiveness-interactive-zone {
+  background: #0d1527 !important;
+  border-color: rgba(244, 63, 94, 0.5) !important;
+}
+
+body.bayou-night-mode .forgiveness-prompt {
+  color: #ffccd5 !important;
+}
+
+body.bayou-night-mode .btn-forgive-no {
+  background: #1e293b !important;
+  color: #94a3b8 !important;
+  border-color: #475569 !important;
+}
+
+body.bayou-night-mode .return-button {
+  background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%) !important;
+  color: #ffccd5 !important;
+  border-color: rgba(255, 101, 132, 0.4) !important;
+}
+
+/* Badges y Enlaces */
+body.bayou-night-mode .back-link {
+  background: rgba(20, 28, 46, 0.9) !important;
+  color: #ffccd5 !important;
+  border-color: rgba(255, 101, 132, 0.35) !important;
+}
+
+body.bayou-night-mode .characters-floating-badge {
+  background: rgba(20, 28, 46, 0.9) !important;
+  color: #a7f3d0 !important;
+  border-color: rgba(64, 121, 82, 0.45) !important;
+}
+
+body.bayou-night-mode .doc-badge {
+  background: rgba(179, 136, 235, 0.22) !important;
+  color: #e9d5ff !important;
+  border-color: rgba(179, 136, 235, 0.45) !important;
+}
+
+body.bayou-night-mode .sapo-badge {
+  background: rgba(64, 121, 82, 0.3) !important;
+  color: #a7f3d0 !important;
+  border-color: rgba(110, 231, 183, 0.45) !important;
+}
+
+body.bayou-night-mode .title-accent {
+  color: #ff758f !important;
+  text-shadow: 0 0 18px rgba(255, 117, 143, 0.5);
+}
+
+body.bayou-night-mode .eyebrow {
+  color: #ffd166 !important;
+}
+
+/* Modal y Footer */
+body.bayou-night-mode .modal-card {
+  background: #141c2e !important;
+  border: 1px solid rgba(255, 215, 0, 0.3);
+}
+
+body.bayou-night-mode .modal-caption {
+  color: #f1f5f9 !important;
+}
+
+body.bayou-night-mode .close-modal-btn {
+  background: #1e293b !important;
+  color: #ffd166 !important;
+}
+
+body.bayou-night-mode .site-footer {
+  border-top-color: rgba(255, 215, 0, 0.2) !important;
   color: #94a3b8 !important;
 }
 
-body.bayou-night-mode .char-card {
-  background: rgba(20, 28, 46, 0.95);
-  border-color: rgba(255, 215, 0, 0.25);
+body.bayou-night-mode .footer-link {
+  color: #ffd166 !important;
 }
 
 body.bayou-night-mode .evangeline-star {
@@ -4401,6 +4765,347 @@ body.bayou-night-mode .voice-wave-bars span {
 
 body.bayou-night-mode .voice-wave-bars span.active {
   background: #ffd166;
+}
+
+
+
+/* ==========================================================
+   ESCENA 2: CORAZÓN FLECHADO TALLADO EN LA CORTEZA DEL ÁRBOL
+   CON INICIALES I+J (AUTÉNTICO ESTILO DISNEY, SIN CAJAS NEGRAS)
+   ========================================================== */
+.bayou-tree-trunk-scene {
+  position: fixed;
+  bottom: 25px;
+  right: 25px;
+  left: auto;
+  width: 230px;
+  height: 250px;
+  pointer-events: none;
+  z-index: 12;
+  user-select: none;
+  background: transparent !important;
+}
+
+/* Sin fondo ni marcos: solo el corazón flechado y las letras I+J resplandeciendo en el cielo */
+.bark-wood-texture {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  background: transparent !important;
+  box-shadow: none !important;
+  border: none !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.bark-vertical-grooves {
+  display: none !important;
+}
+
+.carved-heart-graphic {
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  filter: drop-shadow(0 0 6px rgba(0, 0, 0, 0.9));
+}
+
+/* Trazo del corazón tallado en madera */
+.carved-heart-stroke {
+  stroke: #ffb703;
+  stroke-width: 6.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  fill: none;
+  animation: emberFlamePulse 2.5s ease-in-out infinite alternate;
+}
+
+/* Flecha de Cupido tallada */
+.arrow-carved-tip {
+  fill: #ffea00;
+  stroke: #ff9100;
+  stroke-width: 2;
+  filter: drop-shadow(0 0 8px #ffcc00);
+}
+
+.arrow-carved-shaft {
+  stroke: #ffc300;
+  stroke-width: 5;
+  stroke-linecap: round;
+  filter: drop-shadow(0 0 6px #ff9100);
+}
+
+.arrow-carved-feathers {
+  stroke: #ff9900;
+  stroke-width: 4;
+  stroke-linecap: round;
+}
+
+/* Letras talladas I+J con fuego de luciérnaga */
+.carved-letter-line,
+.carved-plus-line {
+  stroke: #ffff80;
+  stroke-width: 5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  fill: none;
+  animation: emberFlamePulse 2.5s ease-in-out infinite alternate;
+}
+
+@keyframes emberFlamePulse {
+  0% {
+    stroke: #ffb703;
+    filter: drop-shadow(0 0 3px #ffffff) drop-shadow(0 0 10px #ff9100) drop-shadow(0 0 18px rgba(255, 80, 0, 0.7));
+  }
+  100% {
+    stroke: #fffbe0;
+    filter: drop-shadow(0 0 5px #ffffff) drop-shadow(0 0 14px #ffea00) drop-shadow(0 0 28px #ff5722);
+  }
+}
+
+/* Chispas flotantes desde la corteza */
+.carved-firefly-sparks {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.carved-firefly-sparks .spark {
+  position: absolute;
+  font-size: 13px;
+  color: #ffea00;
+  animation: sparkRise 3.5s ease-in infinite;
+  opacity: 0;
+}
+
+.carved-firefly-sparks .sp1 { left: 40%; bottom: 25%; animation-delay: 0s; }
+.carved-firefly-sparks .sp2 { right: 28%; bottom: 40%; animation-delay: 1.2s; font-size: 11px; }
+.carved-firefly-sparks .sp3 { left: 60%; bottom: 18%; animation-delay: 2.4s; font-size: 15px; }
+
+@keyframes sparkRise {
+  0% { transform: translateY(0) scale(0.6); opacity: 0; }
+  35% { opacity: 0.95; }
+  100% { transform: translateY(-50px) translateX(20px) scale(1.15); opacity: 0; }
+}
+
+/* ==========================================================
+   SISTEMA RESPONSIVO TOTAL (COMPATIBLE CON TODOS LOS DISPOSITIVOS)
+   ========================================================== */
+
+/* 1. TABLETS Y LAPTOPS PEQUEÑAS (max-width: 1024px) */
+@media (max-width: 1024px) {
+  .bayou-tree-trunk-scene {
+    bottom: 18px;
+    right: 14px;
+    left: auto;
+    transform: scale(0.72);
+    transform-origin: bottom right;
+  }
+
+  .rose-interactive-anchor .container {
+    transform: scale(0.55);
+  }
+}
+
+/* 2. CELULARES EN VERTICAL (max-width: 768px) */
+@media (max-width: 768px) {
+  .rose-screen-wrap {
+    padding: 10px 12px;
+  }
+
+  /* Corazón con flecha I+J en la esquina inferior */
+  .bayou-tree-trunk-scene {
+    bottom: max(14px, env(safe-area-inset-bottom));
+    right: max(8px, env(safe-area-inset-right));
+    left: auto;
+    transform: scale(0.55);
+    transform-origin: bottom right;
+    z-index: 5;
+    opacity: 0.95;
+  }
+
+  /* Botón de música compacto */
+  .music-floating-toggle {
+    top: max(8px, env(safe-area-inset-top));
+    right: max(8px, env(safe-area-inset-right));
+  }
+
+  .dark-music-btn {
+    padding: 6px 12px;
+    font-size: 11.5px;
+    gap: 6px;
+  }
+
+  .dark-music-btn .music-label-text {
+    max-width: 80px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  /* Rosa interactiva al centro ajustada a pantalla de móvil */
+  .rose-interactive-anchor {
+    transform: translate(-50%, -48%);
+    width: 210px;
+    height: 350px;
+  }
+
+  .container {
+    transform: scale(0.48);
+  }
+
+  .rose-interactive-anchor:hover .container,
+  .rose-interactive-anchor:active .container {
+    transform: scale(0.52);
+  }
+
+  .click-rose-badge {
+    bottom: -36px;
+    padding: 6px 14px;
+    font-size: 11.5px;
+    max-width: 88vw;
+    white-space: normal;
+    text-align: center;
+  }
+
+  /* Footer inferior */
+  .rose-footer {
+    margin-bottom: max(6px, env(safe-area-inset-bottom));
+  }
+
+  .dark-footer-pill {
+    padding: 6px 16px;
+    font-size: 11.5px;
+    max-width: 86vw;
+  }
+}
+
+/* 3. CELULARES PEQUEÑOS (max-width: 390px, ej. iPhone SE / pantallas angostas) */
+@media (max-width: 390px) {
+  .bayou-tree-trunk-scene {
+    bottom: max(8px, env(safe-area-inset-bottom));
+    right: max(4px, env(safe-area-inset-right));
+    transform: scale(0.46);
+    opacity: 0.9;
+  }
+
+  .dark-music-btn .music-label-text {
+    display: none;
+  }
+
+  .dark-music-btn {
+    padding: 6px 10px;
+  }
+
+  .container {
+    transform: scale(0.44);
+  }
+
+  .rose-interactive-anchor:hover .container,
+  .rose-interactive-anchor:active .container {
+    transform: scale(0.47);
+  }
+
+  .click-rose-badge {
+    bottom: -32px;
+    padding: 5px 10px;
+    font-size: 10.5px;
+  }
+
+  .dark-footer-pill {
+    padding: 5px 12px;
+    font-size: 11px;
+  }
+}
+
+/* 4. DISPOSITIVOS EN HORIZONTAL / PANTALLAS DE POCA ALTURA (max-height: 600px) */
+@media (max-height: 600px) {
+  .rose-screen-wrap {
+    padding: 6px 10px;
+    justify-content: space-between;
+  }
+
+  .rose-header {
+    margin-top: 0;
+  }
+
+  .rose-header h2 {
+    font-size: 16px;
+    margin-bottom: 1px;
+  }
+
+  .apology-title {
+    font-size: 14px;
+    margin: 1px 0;
+  }
+
+  .apology-accent {
+    font-size: 20px;
+  }
+
+  .touch-hint-line {
+    display: none;
+  }
+
+  .rose-interactive-anchor {
+    transform: translate(-50%, -46%);
+    height: 230px;
+  }
+
+  .container {
+    transform: scale(0.38) !important;
+  }
+
+  .click-rose-badge {
+    bottom: -28px;
+    padding: 4px 10px;
+    font-size: 10px;
+  }
+
+  .bayou-tree-trunk-scene {
+    bottom: 4px;
+    right: 4px;
+    left: auto;
+    transform: scale(0.40) !important;
+    transform-origin: bottom right;
+  }
+
+  .rose-footer {
+    margin-bottom: 2px;
+  }
+
+  .dark-footer-pill {
+    padding: 4px 12px;
+    font-size: 10.5px;
+  }
+}
+
+/* 5. PANTALLAS ULTRABAJAS EN HORIZONTAL (max-height: 420px) */
+@media (max-height: 420px) {
+  .container {
+    transform: scale(0.32) !important;
+  }
+
+  .rose-interactive-anchor {
+    transform: translate(-50%, -44%);
+    height: 180px;
+  }
+
+  .click-rose-badge {
+    bottom: -24px;
+  }
+
+  .rose-header h2 {
+    font-size: 14px;
+  }
+
+  .apology-title {
+    font-size: 12px;
+  }
+
+  .apology-accent {
+    font-size: 18px;
+  }
 }
 
 
